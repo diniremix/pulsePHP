@@ -1,0 +1,18 @@
+#Hacer las url amigables
+RewriteEngine on  
+RewriteBase /pulsephp/  
+RewriteCond %{REQUEST_FILENAME} !-d  
+RewriteCond %{REQUEST_FILENAME} !-f  
+RewriteCond %{REQUEST_FILENAME} !-l  
+RewriteRule ^(.+)$ index.php?url=$1 [QSA,NC,L]  
+
+#No mostrar contenido de carpetas
+DirectoryIndex index.php index.html index.htm
+Options -Indexes +MultiViews +FollowSymlinks
+IndexIgnore *
+
+#Denegar acceso a multiples archivos
+<FilesMatch ".(htaccess|htpasswd|ini|sql|json)$">
+Order Allow,Deny
+Deny from all
+</FilesMatch>

@@ -1,0 +1,72 @@
+{
+	"build_systems":
+	[
+	],
+	"folders":
+	[		
+		{
+			"name": "Models",
+			"file_exclude_patterns": ["*.php~"],
+			"path": "app/models"
+		},
+		{
+			"name": "Views",
+			"file_exclude_patterns": ["*.php~"],
+			"path": "app/views"
+		},
+		{
+			"name": "Controllers",
+			"file_exclude_patterns": ["*.php~"],
+			"path": "app/controllers"
+		},
+		{
+			"name": "Utils",
+			"file_exclude_patterns": ["*.php~"],
+			"path": "app/utils"
+		},
+		{
+			"name": "Vendor",
+			"file_exclude_patterns": ["*.php~"],
+			"path": "app/vendor"
+		},
+		{
+			"name": "Configuration",
+			"file_exclude_patterns": ["*.php~"],
+			"path": "app/config"
+		},
+		{
+			"name": "Public",
+			"path": "app/public",
+			"folder_exclude_patterns": [
+				"*.php~"
+			],
+			"file_exclude_patterns": ["*.sublime-project","*.sublime-workspace",".classpath",".project"]
+		},
+		{
+			"name": "app",
+			"path": "app",
+			"folder_exclude_patterns": [
+				"*.php~",
+				"config",
+				"controllers",
+				"models",
+				"public",
+				"vendor",
+				"views"
+			],
+			"file_exclude_patterns": ["*.sublime-project","*.sublime-workspace",".classpath",".project"]
+		},
+		{
+			"path": "/",
+			"folder_exclude_patterns": [
+				".settings",
+				"app"
+			],
+			"file_exclude_patterns": ["*.sublime-project","*.sublime-workspace"]
+		}
+	],
+	"settings":
+	{
+		//"tab_size":2
+	}
+}
