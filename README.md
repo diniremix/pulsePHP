@@ -10,13 +10,13 @@ PHP **RESTful** api
 ### Instalación ###
 Clonar este repositorio y alojarlo en una carpeta publica de su servidor web
 
-    git clone git@github.com:diniremix/pulsePHP.git
+	git clone git://github.com/diniremix/pulsePHP.git
 
 * Editor recomendado [SublimeText 2](http://www.sublimetext.com/2)
 
 
 ### Bases de Datos soportadas###
-**pulsePHP** suporta **MySQL** (*InnoDB*), **PostgreSQL**, **SQLite3**, **CUBRID** y **Oracle**. via [RedBeanPHP](http://redbeanphp.com/)
+**pulsePHP** suporta **MySQL** (*InnoDB*), **PostgreSQL**, **SQLite3**, y **CUBRID.** via [RedBeanPHP](http://redbeanphp.com/)
 
 
 ### Licencia ###

@@ -3,49 +3,80 @@
 	[
 	],
 	"folders":
-	[		
+	[
 		{
+			"file_exclude_patterns":
+			[
+				"*.php~"
+			],
 			"name": "Models",
-			"file_exclude_patterns": ["*.php~"],
 			"path": "app/models"
 		},
 		{
+			"file_exclude_patterns":
+			[
+				"*.php~"
+			],
 			"name": "Views",
-			"file_exclude_patterns": ["*.php~"],
 			"path": "app/views"
 		},
 		{
+			"file_exclude_patterns":
+			[
+				"*.php~"
+			],
 			"name": "Controllers",
-			"file_exclude_patterns": ["*.php~"],
 			"path": "app/controllers"
 		},
 		{
+			"file_exclude_patterns":
+			[
+				"*.php~"
+			],
 			"name": "Utils",
-			"file_exclude_patterns": ["*.php~"],
 			"path": "app/utils"
 		},
 		{
+			"file_exclude_patterns":
+			[
+				"*.php~"
+			],
 			"name": "Vendor",
-			"file_exclude_patterns": ["*.php~"],
 			"path": "app/vendor"
 		},
 		{
+			"file_exclude_patterns":
+			[
+				"*.php~"
+			],
 			"name": "Configuration",
-			"file_exclude_patterns": ["*.php~"],
 			"path": "app/config"
 		},
 		{
-			"name": "Public",
-			"path": "app/public",
-			"folder_exclude_patterns": [
+			"file_exclude_patterns":
+			[
+				"*.sublime-project",
+				"*.sublime-workspace",
+				".classpath",
+				".project"
+			],
+			"folder_exclude_patterns":
+			[
 				"*.php~"
 			],
-			"file_exclude_patterns": ["*.sublime-project","*.sublime-workspace",".classpath",".project"]
+			"name": "Public",
+			"path": "app/public"
 		},
 		{
-			"name": "app",
-			"path": "app",
-			"folder_exclude_patterns": [
+			"file_exclude_patterns":
+			[
+				"*.sublime-project",
+				"*.sublime-workspace",
+				".classpath",
+				".project"
+			],
+			"folder_exclude_patterns":
+			[
 				"*.php~",
 				"config",
 				"controllers",
@@ -54,19 +85,11 @@
 				"vendor",
 				"views"
 			],
-			"file_exclude_patterns": ["*.sublime-project","*.sublime-workspace",".classpath",".project"]
-		},
-		{
-			"path": "/",
-			"folder_exclude_patterns": [
-				".settings",
-				"app"
-			],
-			"file_exclude_patterns": ["*.sublime-project","*.sublime-workspace"]
+			"name": "app",
+			"path": "app"
 		}
 	],
 	"settings":
 	{
-		//"tab_size":2
 	}
 }
