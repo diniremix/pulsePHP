@@ -3,5 +3,5 @@
 	
 	Route::get('/usuarios');
 	Route::post('/usuarios');
-	Route::startup();	
+	Route::startup();
 ?>

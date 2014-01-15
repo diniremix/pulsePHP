@@ -48,7 +48,7 @@ class Rest extends RedBean_Facade{
 		
 		/*=========== user-defined functions ==========*/
 		public static function fn_usuarios($dataStore=null) {
-			return 114;
+			return 202;
 		}
 }
 ?>
