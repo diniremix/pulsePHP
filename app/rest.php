@@ -50,5 +50,36 @@ class Rest extends RedBean_Facade{
 		public static function fn_usuarios($dataStore=null) {
 			return 202;
 		}
+		
+		/*function __autoload($nombre_clase) {
+		    include "controllers/".$nombre_clase;
+		}*/
+
+		public static function fn_personas($dataStore=null) {
+			$className=strtolower($dataStore)."Controller.php";
+			$clase=$className;
+			include_once("controllers/".$className);
+			
+			//$nombre_del_objeto = "Producto";
+			//$nombre_de_la_nueva_clase = "{$nombre_del_objeto}Collection";
+			//eval("class $nombre_de_la_nueva_clase extends CollectorObject {};");
+			$nombre_del_objeto = $className;
+			$nombre_de_la_nueva_clase = "{$nombre_del_objeto}";
+			eval("class $nombre_de_la_nueva_clase extends Rest {};");
+
+		    $mi_clase = new $nombre_de_la_nueva_clase();
+		    //$mi_clase = new personaController();
+			return $mi_clase->run();
+
+    		if (class_exists("controllers/".$className)) {
+			    $mi_clase = new $clase();
+				return $mi_clase->run();
+			}else{
+				return 404;
+			}
+			//return 404;
+			//$class->run();
+			//isset($class);
+		}
 }
 ?>
