@@ -21,4 +21,16 @@ function sanityCheck($values){
 	return $htmlentities;
 }
 
+/**
+ * Echoing json response to client
+ * @param String $status_code Http response code
+ * @param Int $response Json response
+ */
+function echoRespnse($status_code, $response) {
+    $app = \Slim\Slim::getInstance();
+    $app->status($status_code);
+    $app->contentType(APP_TYPE_CONTENT);
+    echo json_encode($response);
+}
+
 ?>

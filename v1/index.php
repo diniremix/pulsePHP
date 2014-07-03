@@ -17,18 +17,6 @@ $app = new \Slim\Slim();
 // User id from db - Global Variable
 $user_id = NULL;
  
- 
-/**
- * Echoing json response to client
- * @param String $status_code Http response code
- * @param Int $response Json response
- */
-function echoRespnse($status_code, $response) {
-    $app = \Slim\Slim::getInstance();
-    $app->status($status_code);
-    $app->contentType(APP_TYPE_CONTENT);
-    echo json_encode($response);
-}
 
 /**************************** ROUTE APP ****************************/
 $app->get('/', function() use ($app) {
@@ -258,11 +246,6 @@ $app->delete('/tasks/:id', 'authenticate', function($task_id) use($app) {
     echoRespnse(200, $response);
 });
 
-function helo(){
-    $response = array();
-    $response['message'] = 'HELLO desde '.API_FULLNAME;
-    echoRespnse(200, $response);
-}
 //run the app
 $app->run();
 ?>
