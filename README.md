@@ -1,10 +1,11 @@
 ##PulsePHP##
-PHP **RESTful** api
+PHP **RESTful** API
 
 
 ### Requisitos ###
 - [Apache](http://www.apache.org/) Version 2.2.x o compatible
-- [PHP](http://www.php.net/) Version 5.3.5 o superior
+- [PHP](http://www.php.net/) Version 5.3.8 o superior
+- [Slim a PHP micro framework (incluida)](http://www.slimframework.com/) Version 2.4.2 o superior
 
 
 ### Instalación ###
@@ -16,7 +17,7 @@ Clonar este repositorio y alojarlo en una carpeta publica de su servidor web
 
 
 ### Bases de Datos soportadas###
-**pulsePHP** suporta **MySQL** (*InnoDB*), **PostgreSQL**, **SQLite3**, y **CUBRID.** via [RedBeanPHP](http://redbeanphp.com/)
+**pulsePHP** soporta **MySQL** (*InnoDB*), **PostgreSQL**, **SQLite3**, y **CUBRID.** via [RedBeanPHP](http://redbeanphp.com/)
 
 
 ### Licencia ###
