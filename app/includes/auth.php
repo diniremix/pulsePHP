@@ -1,4 +1,10 @@
 <?php
+/**
+ * Generating random Unique MD5 String for user Api key
+ */
+function generateApiKey() {
+    return md5(uniqid(rand(), true));
+}
 
 /**
  * Verifying required params posted or not
@@ -19,8 +25,8 @@ function verifyRequiredParams($required_fields) {
             $error_fields .= $field . ', ';
         }
     }
- 
-    if ($error) {
+     
+    if ($error){
         // Required field(s) are missing or empty
         // echo error json and stop the app
         $response = array();
@@ -29,6 +35,13 @@ function verifyRequiredParams($required_fields) {
         $response["message"] = 'Required field(s) ' . substr($error_fields, 0, -2) . ' is missing or empty';
         echoRespnse(400, $response);
         $app->stop();
+    }else{
+        //return form values
+        $formdata=array();
+        foreach ($required_fields as $value) {
+            $formdata[$value] = sanityCheck($request_params[$value]);
+        }
+        return $formdata;
     }
 }
  

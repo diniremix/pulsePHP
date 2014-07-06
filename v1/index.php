@@ -1,19 +1,31 @@
 <?php
 require_once('../app/config/app.php');
-require_once(APP_ABSPATH.'Config.php');
-require_once(APP_ABSPATH.'../includes/auth.php');
-require_once(APP_ABSPATH.'../includes/utils.php');
-require_once(APP_ABSPATH.'../includes/DbHandler.php');
-
-//require_once(APP_ABSPATH.'../includes/database.php');
-//require_once(APP_ABSPATH.'DbHandler.php');
-//require_once(APP_ABSPATH.'PassHash.php');
-require '../app/vendor/Slim/Slim.php';
  
 \Slim\Slim::registerAutoloader();
  
-$app = new \Slim\Slim();
- 
+// Set the current mode
+$app = new \Slim\Slim(array(
+    'mode' => 'development'
+));
+
+// Only invoked if mode is "production"
+$app->configureMode('production', function () use ($app) {
+    $app->config(array(
+        'log.enable' => true,
+        'debug' => false
+    ));
+});
+
+// Only invoked if mode is "development"
+$app->configureMode('development', function () use ($app) {
+    $app->config(array(
+        'log.enable' => false,
+        'debug' => true
+    ));
+});
+
+
+
 // User id from db - Global Variable
 $user_id = NULL;
  
@@ -26,6 +38,11 @@ $app->get('/', function() use ($app) {
 });// root
 
 
+$app->notFound(function () use ($app) {
+    //$app->render('404.html');
+    echoRespnse(404,'404 no found here');
+});
+
 /**
  * User Registration
  * url - /register
@@ -33,22 +50,47 @@ $app->get('/', function() use ($app) {
  * params - name, email, password
  */
 $app->post('/register', function() use ($app) {
-	// check for required params
-	verifyRequiredParams(array('name', 'email', 'password'));
+    // check for required params
+    $fields = array('name', 'email', 'password');
+    $formdata=verifyRequiredParams($fields);
+    // validating email address
+    validateEmail($formdata['email']);
 
-	$response = array();
+    if(!$formdata){
+        echoRespnse(204,'unexpected Error');
+        $app->stop();
+    }
+    
+    $bc= new baseController();
+    $user= $bc->createIntance('users');
+    $user = new $user();
+    
+    if(!$user){
+        echoRespnse(400,OBJECT_NOT_FOUND);
+        $app->stop();
+    }
 
+    //$data=$user->save('users',$formdata);
+    $data=$user->populate('users',$formdata);
+    echoRespnse(200,$data);
+
+    //echoRespnse(400,OBJECT_NOT_FOUND);
+    //$user->organize($user,$formdata);
+    //
+    //echoRespnse(200,$formdata);
+
+	//$response = array();
 	// reading post params
-	$name = $app->request->post('name');
-	$email = $app->request->post('email');
-	$password = $app->request->post('password');
+	//$name = $app->request->post('name');
+	//$email = $app->request->post('email');
+	//$password = $app->request->post('password');
 
 	// validating email address
-	validateEmail($email);
+	//validateEmail($email);
 
-	$db = new DbHandler();
-	$res = $db->createUser($name, $email, $password);
-
+	//$db = new DbHandler();
+	//$res = $db->createUser($name, $email, $password);
+/*
 	if ($res == USER_CREATED_SUCCESSFULLY) {
 	    $response["error"] = false;
 	    $response["message"] = "You are successfully registered";
@@ -61,7 +103,8 @@ $app->post('/register', function() use ($app) {
 	    $response["error"] = true;
 	    $response["message"] = "Sorry, this email already existed";
 	    echoRespnse(200, $response);
-	}
+	}*/
+
 });
 
 /**
@@ -247,5 +290,6 @@ $app->delete('/tasks/:id', 'authenticate', function($task_id) use($app) {
 });
 
 //run the app
+//$app->config('debug', false);
 $app->run();
 ?>
