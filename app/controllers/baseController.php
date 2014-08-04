@@ -3,7 +3,7 @@ class baseController extends Database{
 
 	function __construct(){
 		require_once (APP_ABSPATH.'../includes/database.php');
-        require_once (APP_ABSPATH.'../includes/PassHash.php');
+        //require_once (APP_ABSPATH.'../includes/PassHash.php');
         $db= Database::init();
 	}
 
@@ -27,7 +27,7 @@ class baseController extends Database{
 			$response["error"] = true;
 	        $response["message"] = MODEL_CONTROLLER_NOT_FOUND;
 	        echoRespnse(400, $response);
-	        $app->stop();
+	        //$app->stop();
 		}
 	}
 

@@ -16,5 +16,6 @@ require_once(APP_ABSPATH.'../includes/utils.php');
 require_once(APP_ABSPATH.'../includes/auth.php');
 require_once(APP_ABSPATH.'../includes/database.php');
 require_once(APP_ABSPATH.'../controllers/baseController.php');
+//require_once(APP_ABSPATH.'../../app/route.php');
 require '../app/vendor/Slim/Slim.php';
 ?>

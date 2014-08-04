@@ -41,7 +41,14 @@ class Database extends RedBean_Facade{
 				$record->{$key}=$values;
 			}		
 			$id = R::store($record);
-	    	return $id;
+	    	// Check for successful insertion
+            if ($id>0) {
+                // User successfully inserted
+                return USER_CREATED_SUCCESSFULLY;
+            } else {
+            	// Failed to create user
+            	return USER_CREATE_FAILED;
+            }
 		}
 		catch( Exception $e ) {
 			R::rollback();
@@ -54,14 +61,48 @@ class Database extends RedBean_Facade{
      * @param String $email email to check in db
      * @return boolean
      */
-    private function isUserExists($email) {
-        $stmt = $this->conn->prepare("SELECT id from users WHERE email = ?");
-        $stmt->bind_param("s", $email);
+    public function isUserExists($email) {
+    	$UserExist=R::getCell( 'SELECT id from users WHERE email = ?', array($email));
+        return $UserExist > 0;
+    }
+
+    /**
+     * Fetching user by email
+     * @param String $email User email id
+     */
+    public function getUserByEmail($email) {
+        $user=R::getRow( 'SELECT name, email, api_key, status, created_at FROM users WHERE email = ?', 
+            array($email) 
+        );
+
+        if ($user){
+            return $user;
+        } else {
+            return NULL;
+        }
+    }
+
+/*====================== Tasks =====================*/
+
+    /**
+     * Fetching all user tasks
+     * @param String $user_id id of the user
+     */
+    public function getAllUserTasks($user_id) {
+    	$task=R::getAll( 'SELECT t.* FROM tasks t, user_tasks ut WHERE t.id = ut.task_id AND ut.user_id = ?', 
+            array($user_id) 
+        );
+        if ($task){
+            return $task;
+        }else{
+            return NULL;
+        }
+        /*$stmt = $this->conn->prepare("SELECT t.* FROM tasks t, user_tasks ut WHERE t.id = ut.task_id AND ut.user_id = ?");
+        $stmt->bind_param("i", $user_id);
         $stmt->execute();
-        $stmt->store_result();
-        $num_rows = $stmt->num_rows;
+        $tasks = $stmt->get_result();
         $stmt->close();
-        return $num_rows > 0;
+        return $tasks;*/
     }
 }
 ?>
