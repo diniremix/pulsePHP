@@ -53,13 +53,21 @@ function verifyRequiredParams($required_fields) {
 /**
  * Validating email address
  */
-function validateEmail($email) {
+/**
+ * [validateEmail Validating email address]
+ * @param  [type]  $email
+ * @param  boolean $stopApp [defines whether the application will be stopped]
+ * @return [boolean]
+ */
+function validateEmail($email,$stopApp=true) {
     $app = \Slim\Slim::getInstance();
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    if ((!filter_var($email, FILTER_VALIDATE_EMAIL)&& !$stopApp)) {
         $response["error"] = true;
         $response["message"] = 'Email address is not valid';
         echoRespnse(400, $response);
         $app->stop();
+    }else{
+        return true;
     }
 }
 
@@ -73,6 +81,14 @@ function sanityCheck($values){
         return NULL;
     }
 	return $htmlentities;
+}
+
+/**
+ * [gettimestamp generates a timestamp based on the date and time of the server]
+ * @return [sring] [a timestamp]
+ */
+function getTimeStamp(){
+    return date("YmdHis");//ej: 20100525151036
 }
 
 /**

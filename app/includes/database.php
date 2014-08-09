@@ -67,13 +67,19 @@ class Database extends RedBean_Facade{
     }
 
     /**
-     * Fetching user by email
-     * @param String $email User email id
+     * Fetching user by email or username
+     * @param String $fields User email or username id
      */
-    public function getUserByEmail($email) {
-        $user=R::getRow( 'SELECT name, email, api_key, status, created_at FROM users WHERE email = ?', 
-            array($email) 
-        );
+    public function getUserById($fields) {
+        $query='SELECT name, username, email, api_key, status, created_at FROM users WHERE ';
+        $field=filter_var($fields, FILTER_VALIDATE_EMAIL);
+        if($field){
+            $query.="email=";
+        }else{
+            $query.="username=";
+        }
+        $query.="'".$fields."' LIMIT 1";
+        $user=R::getRow($query);
 
         if ($user){
             return $user;
@@ -81,6 +87,8 @@ class Database extends RedBean_Facade{
             return NULL;
         }
     }
+
+    
 
 /*====================== Tasks =====================*/
 

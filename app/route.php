@@ -4,15 +4,14 @@
  * User Registration
  * url - /register
  * method - POST
- * params - name, email, password
+ * params - name, username, email, password
  */
 $app->post('/register', function() use ($app) {
     // check for required params
-    $fields = array('name', 'email', 'password');    
+    $fields = array('name', 'username','email', 'password');    
     $formdata=verifyRequiredParams($fields);
     // validating email address
-    validateEmail($formdata['email']);
-
+    validateEmail($formdata['email'],true);
     if(!$formdata){
         $response['error'] = false;
         $response['message'] = 'unexpected Error';
@@ -32,10 +31,11 @@ $app->post('/register', function() use ($app) {
             $app->stop();
         }
         //get password hash and generate api key
-        $key=Auth::getUserKey($formdata['password']);
+        $key=Auth::getUserKey($formdata);
         $formdata=array_merge($formdata,$key);
         //save form
         $result=$user->save('users',$formdata);
+        
         $response['error'] = false;
         $response['message'] = $result;
         echoRespnse(200,$response);
@@ -55,18 +55,17 @@ $app->post('/register', function() use ($app) {
  */
 $app->post('/login', function() use ($app) {
     // check for required params
-    $fields = array('email', 'password');    
+    $fields = array('username', 'password');    
     $formdata=verifyRequiredParams($fields);
-	validateEmail($formdata['email']);
     $response = array();
 
     $bc= new baseController();
     if (Auth::checkLogin($formdata)){
-        // get the user by email
-        $user = $bc->getUserByEmail($formdata['email']);
+        $user = $bc->getUserById($formdata['username']);
         if (!is_null($user)){
             $response['error'] = false;
             $response['name'] = $user['name'];
+            $response['username'] = $user['username'];
             $response['email'] = $user['email'];
             $response['apiKey'] = $user['api_key'];
             $response['createdAt'] = $user['created_at'];
@@ -113,14 +112,14 @@ $app->post('/login', function() use ($app) {
         $response["message"] = "Failed to create task. Please try again";
     }
     echoRespnse(201, $response);
-});*/
+});
 
 /**
  * Listing all tasks of particual user
  * method GET
  * url /tasks          
  */
-$app->get('/tasks', 'authenticates', function() {
+$app->get('/tasks', 'authenticate', function() {
     global $user_id;
     $response = array();
     $bc= new baseController();
@@ -138,10 +137,10 @@ $app->get('/tasks', 'authenticates', function() {
     echoRespnse(200, $response);
 });
 
-function authenticates(\Slim\Route $route) {
+/*function authenticates(\Slim\Route $route) {
     global $user_id;
-    $user_id = 24;
-}
+    $user_id = 32;
+}*/
 /**
  * Listing single task of particual user
  * method GET

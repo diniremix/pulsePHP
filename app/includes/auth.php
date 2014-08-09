@@ -28,20 +28,34 @@ class Auth{
     }
 
     /**
-     * Generating random Unique MD5 String for user Api key
+     * Generating random Unique SHA1 String for user Api key
      */
     public static function generateApiKey() {
-        return md5(uniqid(rand(), true));
+        return sha1(uniqid(rand(), true));
+    }
+
+    /**
+     * [generatePasswordHash generating random Unique SHA1 String for password ]
+     * @param  [array] $fields [password to generate]
+     * @return [string]         [sha1 hash]
+     */
+    public static function generatePasswordHash($fields) {
+        $password=$fields['password'];
+        $password_hash=md5($password.date("Y"));
+        $hash=sha1($password_hash.date("Y"));
+        return $hash;
     }
 
     /**
      * [getPasswordHash get password hash and generate a new api key]
-     * @param  [type] $password [the password]
+     * @param  [type] $fields [array]
      * @return [array]
      */
-    public static function getUserKey($password){
+    public static function getUserKey($fields){
+        $password=self::generatePasswordHash($fields);
         $validKey=array();
         // Generating password hash
+        $validKey['password'] = $password;
         $validKey['password_hash'] = self::hash($password);
         // Generating API key
         $validKey['api_key'] = self::generateApiKey();
@@ -50,21 +64,27 @@ class Auth{
 
      /**
      * Checking user login
-     * @param String $email User login email id
-     * @param String $password User login password
+     * @param Array $fields Username or email login
      * @return boolean User login status success/fail
      */
-    //public function checkLogin($email, $password) {
     public static function checkLogin($fields) {
-        // fetching user by email
-        $password_hash=R::getCell( 'SELECT password_hash FROM users WHERE email = ?', 
-            array($fields['email']) 
-        );
+        // fetching user by email or username
+        $query='SELECT password_hash FROM users WHERE ';
+        $field=filter_var($fields['username'], FILTER_VALIDATE_EMAIL);
+        if($field){
+            $query.="email=";
+        }else{
+            $query.="username=";
+        }
+        $query.="'".$fields['username']."' LIMIT 1";
+        
+        $password_hash=R::getCell($query);
 
+        // Found user with the email o username
         if ($password_hash) {
-            // Found user with the email
+            $pass=self::generatePasswordHash($fields);
             // Now verify the password
-            if (self::check_password($password_hash, $fields['password'])) {
+            if (self::check_password($password_hash,$pass)) {
                 // User password is correct
                 return TRUE;
             } else {
@@ -72,38 +92,31 @@ class Auth{
                 return FALSE;
             }
         } else {
-            // user not existed with the email
+            // user not existed with the email o username
             return FALSE;
         }
     }
-
+   
     /**
-     * Validating user api key
-     * If the api key is there in db, it is a valid key
-     * @param String $api_key user api key
-     * @return boolean
+     * [isValidApiKey Validating user api key
+     * If the api key is there in db, it is a valid key]
+     * @param  [String]  $api_key [user api key]
+     * @return boolean          [description]
      */
     public static function isValidApiKey($api_key) {
-        $isValid=R::getRow( 'SELECT id from users WHERE api_key = ?', array($api_key));
+        $isValid=R::getCell( 'SELECT id from users WHERE api_key = ?', array($api_key));
         if($isValid){
             return true;
         }else{
             return false;
         }
         //return $isValid > 0;
-
-        /*$stmt = $this->conn->prepare("SELECT id from users WHERE api_key = ?");
-        $stmt->bind_param("s", $api_key);
-        $stmt->execute();
-        $stmt->store_result();
-        $num_rows = $stmt->num_rows;
-        $stmt->close();
-        return $num_rows > 0;*/
     }
-
+    
     /**
-     * Fetching user id by api key
-     * @param String $api_key user api key
+     * [getUserId Fetching user id by api key]
+     * @param  [String] $api_key [user api key]
+     * @return [string] $user_id [user ID]
      */
     public static function getUserId($api_key) {
         $user_id=R::getCell( 'SELECT id FROM users WHERE api_key = ?', array($api_key));
@@ -112,19 +125,7 @@ class Auth{
         }else{
             return NULL;
         }
-
-
-        /*$stmt = $this->conn->prepare("SELECT id FROM users WHERE api_key = ?");
-        $stmt->bind_param("s", $api_key);
-        if ($stmt->execute()) {
-            $user_id = $stmt->get_result()->fetch_assoc();
-            $stmt->close();
-            return $user_id;
-        } else {
-            return NULL;
-        }*/
     }
-
 }//class
 
 /**
@@ -134,33 +135,34 @@ class Auth{
 function authenticate(\Slim\Route $route) {
     // Getting request headers
     $headers = apache_request_headers();
-    $response = array();
     $app = \Slim\Slim::getInstance();
+    $response = array();
  
     // Verifying Authorization Header
     if (isset($headers['Authorization'])) {
-        //$db = new DbHandler();
- 
+        $bc= new baseController();
         // get the api key
         $api_key = $headers['Authorization'];
+
         // validating api key
         if (Auth::isValidApiKey($api_key)) {
+            global $user_id;
+            // get user primary key id
+            $userID = Auth::getUserId($api_key);
+            if ($userID != NULL){
+                $user_id = $userID;
+            }else{
+                $response["error"] = true;
+                $response["message"] = "Access Denied. Api key is expired";
+                echoRespnse(401, $response);
+            }
+        }else{
             // api key is not present in users table
             $response["error"] = true;
             $response["message"] = "Access Denied. Invalid Api key";
             echoRespnse(401, $response);
-            //$app->stop();
-        }else{
-            global $user_id;
-            // get user primary key id
-            $userID = Auth::getUserId($api_key);
-            //is_null(var)
-            if ($userID != NULL){
-                $user_id = $userID;
-                //$user_id = $user["id"];
-            }
         }
-    } else {
+    }else{
         // api key is missing in header
         $response["error"] = true;
         $response["message"] = "Api key is misssing";

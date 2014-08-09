@@ -26,7 +26,7 @@ $app->configureMode('development', function () use ($app) {
 });
 
 
-/*====================== App Route =====================*/
+/*====================== App Route Configuration =====================*/
 // User id from db - Global Variable
 $user_id = NULL;
  
