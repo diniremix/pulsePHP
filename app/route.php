@@ -90,23 +90,18 @@ $app->post('/login', function() use ($app) {
  * params - name
  * url - /tasks/
  */
-/*$app->post('/tasks', 'authenticate', function() use ($app) {
-    // check for required params
-    verifyRequiredParams(array('task'));
-
-    $response = array();
-    $task = $app->request->post('task');
-
+$app->post('/tasks', 'authenticate', function() use ($app) {
     global $user_id;
-    $db = new DbHandler();
+    $newtask=verifyRequiredParams(array('task'));
+    $response = array();
+    $bc= new baseController();
 
     // creating new task
-    $task_id = $db->createTask($user_id, $task);
-
-    if ($task_id != NULL) {
+    $result = $bc->createTask($user_id, $newtask);
+    if ($result != NULL) {
         $response["error"] = false;
         $response["message"] = "Task created successfully";
-        $response["task_id"] = $task_id;
+        $response["task_id"] = $result;
     } else {
         $response["error"] = true;
         $response["message"] = "Failed to create task. Please try again";
@@ -137,30 +132,23 @@ $app->get('/tasks', 'authenticate', function() {
     echoRespnse(200, $response);
 });
 
-/*function authenticates(\Slim\Route $route) {
-    global $user_id;
-    $user_id = 32;
-}*/
 /**
  * Listing single task of particual user
  * method GET
  * url /tasks/:id
  * Will return 404 if the task doesn't belongs to user
  */
-/*$app->get('/tasks/:id', 'authenticate', function($task_id) {
+$app->get('/tasks/:id', 'authenticate', function($task_id) {
     global $user_id;
     $response = array();
-    //$db = new DbHandler();
+    $bc= new baseController();
 
     // fetch task
-    $result = $db->getTask($task_id, $user_id);
+    $result = $bc->getTask($task_id, $user_id);
 
     if ($result != NULL) {
         $response["error"] = false;
-        $response["id"] = $result["id"];
-        $response["task"] = $result["task"];
-        $response["status"] = $result["status"];
-        $response["createdAt"] = $result["created_at"];
+        $response["task"] = $result;
         echoRespnse(200, $response);
     } else {
         $response["error"] = true;
@@ -175,23 +163,23 @@ $app->get('/tasks', 'authenticate', function() {
  * params task, status
  * url - /tasks/:id
  */
-/*$app->put('/tasks/:id', 'authenticate', function($task_id) use($app) {
-    // check for required params
-    verifyRequiredParams(array('task', 'status'));
-
-    global $user_id;            
-    $task = $app->request->put('task');
-    $status = $app->request->put('status');
-
-    $db = new DbHandler();
+$app->put('/tasks/:id', 'authenticate', function($task_id) use($app) {
+    global $user_id;
     $response = array();
+    // check for required params
+    $upd_task=verifyRequiredParams(array('task', 'status'));
+    $bc= new baseController();
+
+    //add $task_id id of the task
+    $upd_task=array_merge($upd_task,array('id'=>$task_id));
 
     // updating task
-    $result = $db->updateTask($user_id, $task_id, $task, $status);
-    if ($result) {
+    $result = $bc->update('tasks',$upd_task);
+    if ($result!=NULL) {
         // task updated successfully
         $response["error"] = false;
         $response["message"] = "Task updated successfully";
+        $response["id"] = $result;
     } else {
         // task failed to update
         $response["error"] = true;
@@ -205,13 +193,13 @@ $app->get('/tasks', 'authenticate', function() {
  * method DELETE
  * url /tasks
  */
-/*$app->delete('/tasks/:id', 'authenticate', function($task_id) use($app) {
+$app->delete('/tasks/:id', 'authenticate', function($task_id) use($app) {
     global $user_id;
-
-    $db = new DbHandler();
     $response = array();
-    $result = $db->deleteTask($user_id, $task_id);
-    if ($result) {
+    $bc= new baseController();
+
+    $result = $bc->delete('tasks',$task_id);
+    if ($result!=NULL) {
         // task deleted successfully
         $response["error"] = false;
         $response["message"] = "Task deleted succesfully";
@@ -219,8 +207,9 @@ $app->get('/tasks', 'authenticate', function() {
         // task failed to delete
         $response["error"] = true;
         $response["message"] = "Task failed to delete. Please try again!";
+        $response["id"] = $result;
     }
     echoRespnse(200, $response);
-});*/
+});
 
 ?>

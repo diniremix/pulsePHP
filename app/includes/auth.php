@@ -137,7 +137,7 @@ function authenticate(\Slim\Route $route) {
     $headers = apache_request_headers();
     $app = \Slim\Slim::getInstance();
     $response = array();
- 
+    
     // Verifying Authorization Header
     if (isset($headers['Authorization'])) {
         $bc= new baseController();
@@ -155,19 +155,21 @@ function authenticate(\Slim\Route $route) {
                 $response["error"] = true;
                 $response["message"] = "Access Denied. Api key is expired";
                 echoRespnse(401, $response);
+                $app->stop();
             }
         }else{
             // api key is not present in users table
             $response["error"] = true;
             $response["message"] = "Access Denied. Invalid Api key";
-            echoRespnse(401, $response);
+            echoRespnse(400, $response);
+            $app->stop();
         }
     }else{
         // api key is missing in header
         $response["error"] = true;
         $response["message"] = "Api key is misssing";
         echoRespnse(400, $response);
-        //$app->stop();
+        $app->stop();
     }
 }
 ?>

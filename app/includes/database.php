@@ -40,14 +40,14 @@ class Database extends RedBean_Facade{
 			foreach ($dataStore as $key=>$values) {
 				$record->{$key}=$values;
 			}		
-			$id = R::store($record);
-	    	// Check for successful insertion
+            $id = R::store($record);
+            // Check for successful insertion
             if ($id>0) {
                 // User successfully inserted
-                return USER_CREATED_SUCCESSFULLY;
+                return $id;//USER_CREATED_SUCCESSFULLY;
             } else {
             	// Failed to create user
-            	return USER_CREATE_FAILED;
+            	return -1;//USER_CREATE_FAILED;
             }
 		}
 		catch( Exception $e ) {
@@ -55,6 +55,41 @@ class Database extends RedBean_Facade{
 	    	//return $e;
 		}
 	}
+
+    public function update($table, $dataStore) {
+        $record = R::load($table,$dataStore['id']);
+
+        if($record->id){
+            foreach ($dataStore as $key=>$values) {
+                $record->{$key}=$values;
+            }
+        }else{
+            return NULL;
+        }
+
+        $id = R::store($record);
+
+        if($id>0){
+            return $id;
+        }else{
+            return NULL;
+        }
+    }
+
+    public function delete($table, $id) {
+        $record = R::load($table,$id);
+        if($record->id){
+            R::trash($record);
+        }else{
+            return NULL;
+        }
+        return "OK";
+    }
+
+    public function deleteAll($table) {
+        //Be very careful with this!
+        R::wipe($table);
+    }
 
 	/**
      * Checking for duplicate user by email address
@@ -105,12 +140,53 @@ class Database extends RedBean_Facade{
         }else{
             return NULL;
         }
-        /*$stmt = $this->conn->prepare("SELECT t.* FROM tasks t, user_tasks ut WHERE t.id = ut.task_id AND ut.user_id = ?");
-        $stmt->bind_param("i", $user_id);
-        $stmt->execute();
-        $tasks = $stmt->get_result();
-        $stmt->close();
-        return $tasks;*/
+    }
+
+    /**
+     * Creating new task
+     * @param String $user_id user id to whom task belongs to
+     * @param String $task task text
+     */
+    public function createTask($user_id, $task) {        
+        $new_task_id=self::save('tasks',$task);
+        if($new_task_id>0){
+            $result=self::createUserTask($user_id, $new_task_id);
+            if($result){
+                return $new_task_id;
+            }else{
+                return NULL;
+            }
+        }else{
+            return NULL;
+        }
+    }
+
+    /**
+     * Function to assign a task to user
+     * @param String $user_id id of the user
+     * @param String $task_id id of the task
+     */
+    public function createUserTask($user_id, $task_id) {
+        //$user_tasks= array();
+        //$user_tasks['user_id']=$user_id;
+        //$user_tasks['task_id']=$task_id;
+        //$result=self::save('user_tasks',$user_tasks);
+        $result=R::exec( 'INSERT INTO user_tasks(user_id, task_id) values(?, ?)', array($user_id,$task_id));
+        return $result;
+    }
+
+    /**
+     * Fetching single task
+     * @param String $task_id id of the task
+     * @param String $user_id id of the user
+     */
+    public function getTask($task_id, $user_id) {
+        $task=R::getRow('SELECT t.id, t.task, t.status, t.created_at from tasks t, user_tasks ut WHERE t.id = ? AND ut.task_id = t.id AND ut.user_id = ?',array($task_id, $user_id));
+        if ($task){
+            return $task;
+        } else {
+            return NULL;
+        }
     }
 }
 ?>
