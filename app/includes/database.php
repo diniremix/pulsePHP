@@ -41,14 +41,13 @@ class Database extends RedBean_Facade{
             $id = R::store($record);
             // Check for successful insertion
             if ($id>0) {
-                return $id;;
+                return $id;
             } else {
             	return NULL;
             }
 		}
 		catch( Exception $e ) {
 			R::rollback();
-	    	//return $e;
 		}
 	}
 
@@ -77,7 +76,7 @@ class Database extends RedBean_Facade{
         }else{
             return NULL;
         }
-        return USER_DELETED_SUCCESSFULLY;
+        return DELETED_SUCCESSFULLY;
     }
 
     public function deleteAll($table) {

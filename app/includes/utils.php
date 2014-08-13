@@ -33,17 +33,13 @@ function verifyRequiredParams($required_fields) {
     if ($error){
         // Required field(s) are missing or empty
         // echo error json and stop the app
-        $response = array();
         $app = \Slim\Slim::getInstance();
-        $response["error"] = true;
-        $response["message"] = 'Required field(s) ' . substr($error_fields, 0, -2) . ' is missing or empty';
-        echoRespnse(400, $response);
+        echoRespnse(404, 'Required field(s) ' . substr($error_fields, 0, -2) . ' is missing or empty');
         $app->stop();
     }else{
         //return form values
         $formdata=array();
         foreach ($required_fields as $value) {
-            //$formdata[$value] = sanityCheck($request_params[$value]);
             $formdata[$value] = $request_params[$value];
         }
         return $formdata;
@@ -62,9 +58,7 @@ function verifyRequiredParams($required_fields) {
 function validateEmail($email,$stopApp=true) {
     $app = \Slim\Slim::getInstance();
     if ((!filter_var($email, FILTER_VALIDATE_EMAIL)&& !$stopApp)) {
-        $response["error"] = true;
-        $response["message"] = 'Email address is not valid';
-        echoRespnse(400, $response);
+        echoRespnse(404, 'Email address is not valid');
         $app->stop();
     }else{
         return true;
@@ -93,10 +87,32 @@ function getTimeStamp(){
 
 /**
  * Echoing json response to client
- * @param String $status_code Http response code
- * @param Int $response Json response
+ * @param Int $errorCode response code error
+ * @param String $message response message title
+ * @param Array $data Json response
  */
-function echoRespnse($status_code,$response) {
+function echoRespnse($errorCode,$message,$data=NULL) {
+    $status_code=200;
+    $response=array();
+
+    if(!is_int($errorCode)){
+        $response['errorCode']=404;
+    }else{
+        $response['errorCode']=$errorCode;
+    }
+
+    if(!is_array($message)){
+        $response['message']=$message;
+    }else{
+        $response['message']=DEFAULT_MESSAGE;
+    }
+
+    if($data!=NULL){
+        $response['data']=$data;
+    }else{
+        $response['data']=DEFAULT_DATA_CONTENT;
+    }
+    
     $app = \Slim\Slim::getInstance();
     $app->status($status_code);
     $app->contentType(APP_TYPE_CONTENT);
