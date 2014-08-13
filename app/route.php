@@ -1,5 +1,7 @@
 <?php
 
+/*=========== App Route functions ==========*/
+
 /**
  * User Registration
  * url - /register
@@ -14,7 +16,7 @@ $app->post('/register', function() use ($app) {
     validateEmail($formdata['email'],true);
 
     if(!$formdata){
-        echoRespnse(404,'unexpected Error');
+        echoRespnse(700,UNEXPECTED_ERROR);
         $app->stop();
     }
     
@@ -24,7 +26,7 @@ $app->post('/register', function() use ($app) {
         $user = new $user();
         
         if(!$user){
-            echoRespnse(404,OBJECT_NOT_FOUND);
+            echoRespnse(700,UNEXPECTED_ERROR);
             $app->stop();
         }
         //get password hash and generate api key
@@ -33,10 +35,14 @@ $app->post('/register', function() use ($app) {
         //save form
         $result=$user->save('users',$formdata);
         
-        echoRespnse(0,DEFAULT_MESSAGE,$result);
+        if ($result != NULL) {
+            echoRespnse(0,USER_CREATED_SUCCESSFULLY,$result);
+        }else{
+            echoRespnse(901,USER_CREATE_FAILED);
+        }
     }else{
         // User with same email already existed in the db
-        echoRespnse(404,USER_ALREADY_EXISTED);
+        echoRespnse(900,USER_ALREADY_EXISTED);
     }
 });
 
@@ -58,11 +64,11 @@ $app->post('/login', function() use ($app) {
             echoRespnse(0,DEFAULT_MESSAGE,$user);
         }else{
             // unknown error occurred
-            echoRespnse(404,DEFAULT_ERROR_MESSAGE);
+            echoRespnse(1004,DEFAULT_ERROR_MESSAGE);
         }
     }else{
         // user credentials are wrong
-        echoRespnse(404,'Login failed. Incorrect credentials');
+        echoRespnse(1001,LOGIN_FAILED);
     }
 });
 
@@ -82,7 +88,7 @@ $app->post('/tasks', 'authenticate', function() use ($app) {
     if ($result != NULL) {
         echoRespnse(0,'Task created successfully',$result);
     } else {
-        echoRespnse(404,'Failed to create task. Please try again',$result);
+        echoRespnse(1002,'Failed to create task. Please try again',$result);
     }
 });
 
@@ -101,7 +107,7 @@ $app->get('/tasks', 'authenticate', function() {
         echoRespnse(0,DEFAULT_MESSAGE,$result);
     }else{
         // unknown error occurred
-        echoRespnse(404,DEFAULT_ERROR_MESSAGE);
+        echoRespnse(1004,DEFAULT_ERROR_MESSAGE);
     }
 });
 
@@ -121,7 +127,7 @@ $app->get('/tasks/:id', 'authenticate', function($task_id) {
     if ($result != NULL) {
         echoRespnse(0,DEFAULT_MESSAGE,$result);
     } else {
-        echoRespnse(404,'The requested resource doesn\'t exists');
+        echoRespnse(701,RESOURCE_NOT_EXIST);
     }
 });
 
@@ -146,7 +152,7 @@ $app->put('/tasks/:id', 'authenticate', function($task_id) use($app) {
         echoRespnse(0,'Task updated successfully',$result);
     } else {
         // task failed to update
-        echoRespnse(404,'Task failed to update. Please try again!');
+        echoRespnse(1002,'Task failed to update. Please try again!');
     }
 });
 
@@ -165,7 +171,7 @@ $app->delete('/tasks/:id', 'authenticate', function($task_id) use($app) {
         echoRespnse(0,DEFAULT_MESSAGE,$result);
     } else {
         // task failed to delete
-        echoRespnse(404,'Task failed to delete. Please try again!');
+        echoRespnse(1002,'Task failed to delete. Please try again!');
     }
 });
 
@@ -180,11 +186,12 @@ $app->get('/query', 'authenticate', function() {
     $bc= new baseController();
 
     $result=$bc->execQuery('select * FROM users where id=?',array($user_id));
+    //$result=array(0 =>'hola');
 
     if ($result!=NULL) {
         echoRespnse(0,DEFAULT_MESSAGE,$result);
     } else {
-        echoRespnse(404,DEFAULT_ERROR_MESSAGE);
+        echoRespnse(1004,DEFAULT_ERROR_MESSAGE);
     }
 });
 

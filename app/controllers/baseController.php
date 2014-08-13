@@ -24,9 +24,7 @@ class baseController extends Database{
 				return NULL;
 			}
 		}else{
-			$response["error"] = true;
-	        $response["message"] = MODEL_CONTROLLER_NOT_FOUND;
-	        echoRespnse(400, $response);
+	        echoRespnse(802, MODEL_CONTROLLER_NOT_FOUND);
 	        //$app->stop();
 		}
 	}

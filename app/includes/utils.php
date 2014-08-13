@@ -34,7 +34,7 @@ function verifyRequiredParams($required_fields) {
         // Required field(s) are missing or empty
         // echo error json and stop the app
         $app = \Slim\Slim::getInstance();
-        echoRespnse(404, 'Required field(s) ' . substr($error_fields, 0, -2) . ' is missing or empty');
+        echoRespnse(1005, 'Required field(s) ' . substr($error_fields, 0, -2) . ' is missing or empty');
         $app->stop();
     }else{
         //return form values
@@ -58,7 +58,7 @@ function verifyRequiredParams($required_fields) {
 function validateEmail($email,$stopApp=true) {
     $app = \Slim\Slim::getInstance();
     if ((!filter_var($email, FILTER_VALIDATE_EMAIL)&& !$stopApp)) {
-        echoRespnse(404, 'Email address is not valid');
+        echoRespnse(1003, EMAIL_FAILURE);
         $app->stop();
     }else{
         return true;
@@ -115,7 +115,7 @@ function echoRespnse($errorCode,$message,$data=NULL) {
     
     $app = \Slim\Slim::getInstance();
     $app->status($status_code);
-    $app->contentType(APP_TYPE_CONTENT);
+    $app->contentType(APP_TYPE_CONTENT_DEFAULT);
     echo json_encode($response);
 }
 
