@@ -104,7 +104,8 @@ class Auth{
      * @return boolean          [description]
      */
     public static function isValidApiKey($api_key) {
-        $isValid=R::getCell( 'SELECT id from users WHERE api_key = ?', array($api_key));
+        $bc= new baseController();
+        $isValid=$bc->execQuery( 'SELECT id from users WHERE api_key = ?', array($api_key));
         if($isValid){
             return true;
         }else{
@@ -119,7 +120,8 @@ class Auth{
      * @return [string] $user_id [user ID]
      */
     public static function getUserId($api_key) {
-        $user_id=R::getCell( 'SELECT id FROM users WHERE api_key = ?', array($api_key));
+        $bc= new baseController();
+        $user_id=$bc->execQuery( 'SELECT id from users WHERE api_key = ?', array($api_key));
         if($user_id){
             return $user_id;
         }else{

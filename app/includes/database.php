@@ -106,14 +106,41 @@ class Database extends RedBean_Facade{
         }
     }
 
+    public function search($table,$id=NULL) {
+        if($id!=NULL){
+            if(is_int($id)){
+                if($id>0){
+                    $result = R::load($table,$id);
+                }else{
+                    return NULL;
+                }
+            }else{
+                return NULL;
+            }
+        }else{
+            $result = R::findAndExport($table);
+        }
+      
+        if(!is_array($result)){
+            return $result->export();
+        }else{
+            return $result;
+        }
+    }
+
 	/**
      * Checking for duplicate user by email address
      * @param String $email email to check in db
      * @return boolean
      */
     public function isUserExists($email) {
-    	$UserExist=R::getCell( 'SELECT id from users WHERE email = ?', array($email));
-        return $UserExist > 0;
+        $UserExist=self::execQuery( 'SELECT id from users WHERE email = ?', array($email));
+        if ($UserExist) {
+            return $UserExist;
+        }else{
+            return NULL;
+        }
+
     }
 
     /**
@@ -129,8 +156,7 @@ class Database extends RedBean_Facade{
             $query.="username=";
         }
         $query.="'".$fields."' LIMIT 1";
-        $user=R::getRow($query);
-
+        $user=self::execQuery($query);
         if ($user){
             return $user;
         } else {

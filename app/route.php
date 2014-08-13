@@ -185,8 +185,7 @@ $app->get('/query', 'authenticate', function() {
     global $user_id;
     $bc= new baseController();
 
-    $result=$bc->execQuery('select * FROM users where id=?',array($user_id));
-    //$result=array(0 =>'hola');
+    $result=$bc->search('users');
 
     if ($result!=NULL) {
         echoRespnse(0,DEFAULT_MESSAGE,$result);
