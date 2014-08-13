@@ -202,12 +202,34 @@ $app->delete('/tasks/:id', 'authenticate', function($task_id) use($app) {
     if ($result!=NULL) {
         // task deleted successfully
         $response["error"] = false;
-        $response["message"] = "Task deleted succesfully";
+        $response["message"] = $result;
     } else {
         // task failed to delete
         $response["error"] = true;
         $response["message"] = "Task failed to delete. Please try again!";
-        $response["id"] = $result;
+    }
+    echoRespnse(200, $response);
+});
+
+/**
+ * Listing single data of custom query
+ * method GET
+ * url /query
+ * Will return QUERY_FAILED if the query doesn't execute
+ */
+$app->get('/query', 'authenticate', function() {
+    global $user_id;
+    $response = array();
+    $bc= new baseController();
+
+    $result=$bc->execQuery('select * FROM users');
+
+    if ($result!=NULL) {
+        $response["error"] = false;
+        $response["message"] = $result;
+    } else {
+        $response["error"] = true;
+        $response["message"] = QUERY_FAILED;
     }
     echoRespnse(200, $response);
 });

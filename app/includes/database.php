@@ -37,17 +37,13 @@ class Database extends RedBean_Facade{
 	public function save($table,$dataStore){
 		try{
 			$record = R::dispense($table);
-			foreach ($dataStore as $key=>$values) {
-				$record->{$key}=$values;
-			}		
+            $record->import($dataStore);
             $id = R::store($record);
             // Check for successful insertion
             if ($id>0) {
-                // User successfully inserted
-                return $id;//USER_CREATED_SUCCESSFULLY;
+                return $id;;
             } else {
-            	// Failed to create user
-            	return -1;//USER_CREATE_FAILED;
+            	return NULL;
             }
 		}
 		catch( Exception $e ) {
@@ -60,9 +56,7 @@ class Database extends RedBean_Facade{
         $record = R::load($table,$dataStore['id']);
 
         if($record->id){
-            foreach ($dataStore as $key=>$values) {
-                $record->{$key}=$values;
-            }
+            $record->import($dataStore);
         }else{
             return NULL;
         }
@@ -83,12 +77,34 @@ class Database extends RedBean_Facade{
         }else{
             return NULL;
         }
-        return "OK";
+        return USER_DELETED_SUCCESSFULLY;
     }
 
     public function deleteAll($table) {
         //Be very careful with this!
         R::wipe($table);
+    }
+
+    public function execQuery($sqlQuery,$params=NULL) {
+        $fn="exec";
+        if (preg_match('/SELECT/i', $sqlQuery)>0){
+            $fn="getAll";
+        }
+        $method="{$fn}";
+
+        if(!is_array($params)){
+            $result=R::$method($sqlQuery);
+        }else{
+            $result=R::$method($sqlQuery,$params);
+        }
+
+        if(is_array($result)){
+            return $result;
+        }else if($result>0){
+            return QUERY_SUCCESSFULLY;
+        }else{
+            return NULL;
+        }
     }
 
 	/**
