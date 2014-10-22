@@ -4,15 +4,15 @@ define('DB_USERNAME', 'root');
 define('DB_PASSWORD', '');
 define('DB_HOST', 'localhost');
 define('DB_NAME', 'taskfm');
+
 define('DB_PORT', '3306');
 define('DB_DEFAULT', 'mysql');
-
 /*=========== App Configuration ==========*/
 define('APP_ERROR','Application Error');
 define('APP_MSG','Application Message');
 define('APP_STAT','Application Status');
 define('API_NAME','PulsePHP');
-define('API_VERSION','v1');
+define('API_VERSION','v2.1.1');
 define('API_FULLNAME',API_NAME.' '.API_VERSION);
 //define('PREFIX_FUNCTION','fn_');
 
