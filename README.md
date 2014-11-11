@@ -6,6 +6,7 @@ PHP **RESTful** API
 - [Apache](http://www.apache.org/) Version 2.2.x o compatible
 - [PHP](http://www.php.net/) Version 5.3.8 o superior
 - [Slim a PHP micro framework (incluida)](http://www.slimframework.com/) Version 2.4.2 o superior
+- [RedBean on-the-fly ORM for PHP (incluida)](http://redbeanphp.com/) Version 3.5 o superior
 
 
 ### Instalación ###
@@ -25,6 +26,8 @@ Clonar este repositorio y alojarlo en una carpeta publica de su servidor web
 
 El texto completo de la licencia puede ser encontrado en el archivo **MIT-LICENSE.txt**
 
+### Documentacion ###
+En progreso... :)
 
 ### Contacto ###
 [Diniremix on GitHub](https://github.com/diniremix)
