@@ -49,7 +49,7 @@ class Database extends RedBean_Facade{
 		catch( Exception $e ) {
 			R::rollback();
 		}
-	}
+	}//save
 
     public function update($table, $dataStore) {
         $record = R::load($table,$dataStore['id']);
@@ -67,7 +67,7 @@ class Database extends RedBean_Facade{
         }else{
             return NULL;
         }
-    }
+    }//update
 
     public function delete($table, $id) {
         $record = R::load($table,$id);
@@ -77,14 +77,14 @@ class Database extends RedBean_Facade{
             return NULL;
         }
         return DELETED_SUCCESSFULLY;
-    }
+    }//delete
 
     public function deleteAll($table) {
         //Be very careful with this!
         R::wipe($table);
-    }
+    }//deleteAll
 
-    public function execQuery($sqlQuery,$params=NULL) {
+    public static function execQuery($sqlQuery,$params=NULL) {
         $fn="exec";
         if (preg_match('/SELECT/i', $sqlQuery)>0){
             $fn="getAll";
@@ -104,7 +104,7 @@ class Database extends RedBean_Facade{
         }else{
             return NULL;
         }
-    }
+    }//execQuery
 
     public function search($table,$id=NULL) {
         if($id!=NULL){
@@ -126,47 +126,54 @@ class Database extends RedBean_Facade{
         }else{
             return $result;
         }
-    }
+    }//search
 
-	/**
-     * Checking for duplicate user by email address
-     * @param String $email email to check in db
-     * @return boolean
-     */
-    public function isUserExists($email) {
-        $UserExist=self::execQuery( 'SELECT id from users WHERE email = ?', array($email));
-        if ($UserExist) {
-            return $UserExist;
+    public function select($tables,$fields,$conds=NULL){
+        $sql="SELECT ";
+        $i=1;
+
+        if(!is_array($fields)){
+            return "Se esperaba un array con campos";
         }else{
-            return NULL;
+            $totField=count($fields);
+            foreach($fields as $key => $value){
+                $sql.=$value;
+                if($i<$totField){
+                    $sql.=', ';
+                }else{
+                    $sql.=' ';
+                    break;
+                }
+                $i++;
+            }
         }
 
-    }
-
-    /**
-     * Fetching user by email or username
-     * @param String $fields User email or username id
-     */
-    public function getUserById($fields) {
-        $query='SELECT name, username, email, api_key, status, created_at FROM users WHERE ';
-        $field=filter_var($fields, FILTER_VALIDATE_EMAIL);
-        if($field){
-            $query.="email=";
+        $i=1;
+        if(!is_array($tables)){
+            return "Se esperaba un array con nombres de tablas";
         }else{
-            $query.="username=";
+            $sql.=' FROM ';
+            $tottables=count($tables);
+            foreach($tables as $key => $value){
+                $sql.=$value;
+                if($i<$tottables){
+                    $sql.=', ';
+                }else{
+                    $sql.=' ';
+                    break;
+                }
+                $i++;
+            }
         }
-        $query.="'".$fields."' LIMIT 1";
-        $user=self::execQuery($query);
-        if ($user){
-            return $user;
-        } else {
-            return NULL;
+        if($conds){
+            $sql.=' WHERE '.$conds;
         }
-    }
+        
+        $result = self::execQuery($sql);
+        return $result;
+    }//select
 
-    
-
-/*====================== Tasks =====================*/
+/*====================================== Tasks ====================================*/
 
     /**
      * Fetching all user tasks
