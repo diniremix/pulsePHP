@@ -1,6 +1,6 @@
 <?php
 require_once('../app/config/app.php');
-
+require_once(APP_ABSPATH.'../route.php');
 /*====================== App Route Configuration =====================*/
 
 $app->get('/', function() use ($app) {
