@@ -131,4 +131,26 @@ function echoRespnse($errorCode,$message,$data=NULL) {
     echo json_encode($response);
 }
 
+/**
+ * [loadRoutes search for routes modules]
+ * @return [array] [routes]
+ */
+function loadRoutes(){
+    $dir=APP_ABSPATH."../routers/";
+    $routes=array();
+    if($dh = opendir($dir)){
+        while(($file = readdir($dh))!== false){
+            if(file_exists($dir.$file)){
+                if (preg_match('/php/i', $dir.$file)){
+                    if (($file!=".") && ($file!="..")){
+                        array_push($routes, $dir.$file);
+                    }
+                }
+            }
+        }
+        closedir($dh);
+    }
+    return $routes;
+}
+
 ?>
