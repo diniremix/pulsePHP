@@ -1,10 +1,11 @@
 <?php 
 class Users extends baseController{
 	
-	private $name;
-	private $email;
-	private $password;
-	
+	public 	$name;
+	public  $username;
+	public  $email;
+	public $password;
+		
 	function __construct(){
 	}
 }
