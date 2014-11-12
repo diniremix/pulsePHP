@@ -12,6 +12,7 @@ define('APP_ERROR','Application Error');
 define('APP_MSG','Application Message');
 define('APP_STAT','Application Status');
 define('API_NAME','PulsePHP');
+define('USE_API','/v1');
 define('API_VERSION','v2.1.1');
 define('API_FULLNAME',API_NAME.' '.API_VERSION);
 //define('PREFIX_FUNCTION','fn_');
