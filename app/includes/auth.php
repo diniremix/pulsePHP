@@ -167,8 +167,15 @@ class Auth extends Database{
      * @param String $email email to check in db
      * @return boolean
      */
-    public static function isUserExists($email) {
-        $UserExist=self::execQuery( 'SELECT id from users WHERE email = ?', array($email));
+    public static function isUserExists($fields) {
+        $field=filter_var($fields, FILTER_VALIDATE_EMAIL);
+        $cond="";
+        if($field){
+            $cond="email";
+        }else{
+            $cond="id";
+        }
+        $UserExist=self::execQuery('SELECT id from users WHERE '.$cond.' =?', array($fields));
         if ($UserExist) {
             return $UserExist;
         }else{
