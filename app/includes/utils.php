@@ -1,4 +1,15 @@
 <?php 
+
+function isJSONData($jsonData){
+    $decodedJson = json_decode(stripslashes($jsonData), TRUE);
+    if(json_last_error() == JSON_ERROR_NONE){
+        return $decodedJson;
+    }else{
+        $app = \Slim\Slim::getInstance();
+        echoRespnse(1005, "Invalid JSON value found",$decodedJson);
+        $app->stop();
+    }
+}
 /**
  * Verifying required params posted or not
  */
@@ -7,54 +18,49 @@ function verifyRequiredParams($required_fields) {
     $error_fields = "";
     $request_params = array();
     $request_params = $_REQUEST;
-    
+
     if(isset($_REQUEST['jsonData'])){
-        $decodedJson = json_decode(stripslashes($_REQUEST['jsonData']), TRUE);
-        if (is_null ($decodedJson)){
-            $app = \Slim\Slim::getInstance();
-            echoRespnse(1005, "Invalid JSON value found",$decodedJson);
-            $app->stop();
-        }else{
-            return $decodedJson;
-        }
+        $request_params=isJSONData($_REQUEST['jsonData']);
     }else{
         // Handling PUT request params
-        if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
+        if ($_SERVER['REQUEST_METHOD'] == 'PUT'){
             $app = \Slim\Slim::getInstance();
             parse_str($app->request()->getBody(), $request_params);
+            if(isset($request_params['jsonData'])){
+                $request_params=isJSONData($request_params['jsonData']);
+            }
         }
+    }
 
-        foreach ($required_fields as $field) {
-            if (!isset($request_params[$field]) || strlen(trim($request_params[$field])) <= 0) {
+    foreach ($required_fields as $field) {
+        if (!isset($request_params[$field]) || strlen(trim($request_params[$field])) <= 0) {
+            $error = true;
+            $error_fields .= $field . ', ';
+        }
+    }
+
+    if (!$error){
+        foreach ($required_fields as $field){
+            if (is_null(sanityCheck($request_params[$field]))){
                 $error = true;
                 $error_fields .= $field . ', ';
-            }
+            }            
         }
+    }
 
-        if (!$error){
-            foreach ($required_fields as $field){
-                if (is_null(sanityCheck($request_params[$field]))){
-                    $error = true;
-                    $error_fields .= $field . ', ';
-                }            
-            }
+    if ($error){
+        // Required field(s) are missing or empty
+        // echo error json and stop the app
+        $app = \Slim\Slim::getInstance();
+        echoRespnse(1005, 'Required field(s) "' . substr($error_fields, 0, -2) . '" is missing or empty');
+        $app->stop();
+    }else{
+        //return form values
+        $formdata=array();
+        foreach ($required_fields as $value) {
+            $formdata[$value] = $request_params[$value];
         }
-
-
-        if ($error){
-            // Required field(s) are missing or empty
-            // echo error json and stop the app
-            $app = \Slim\Slim::getInstance();
-            echoRespnse(1005, 'Required field(s) "' . substr($error_fields, 0, -2) . '" is missing or empty');
-            $app->stop();
-        }else{
-            //return form values
-            $formdata=array();
-            foreach ($required_fields as $value) {
-                $formdata[$value] = $request_params[$value];
-            }
-            return $formdata;
-        }
+        return $formdata;
     }
 }
 
