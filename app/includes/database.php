@@ -133,7 +133,7 @@ class Database extends RedBean_Facade{
         $i=1;
 
         if(!is_array($fields)){
-            return MISSING_ARRAY_FIELDS;
+            $sql.='*';
         }else{
             $totField=count($fields);
             foreach($fields as $key => $value){
