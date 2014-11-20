@@ -142,7 +142,7 @@ function echoRespnse($errorCode,$message,$data=NULL) {
  * @return [array] [routes]
  */
 function loadRoutes(){
-    $dir=APP_ABSPATH."../routes/";
+    $dir=APP_ABSPATH.ROUTES_APP;
     $routes=array();
     if($dh = opendir($dir)){
         while(($file = readdir($dh))!== false){
