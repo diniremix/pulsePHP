@@ -55,7 +55,7 @@
 		601=>'Application Error',
 		602=>'Api Key is expired',
         603=>'Invalid Api Key',
-        604=>'Api Key is misssing',
+        604=>'Api Key is missing',
         //
         700=>'Unexpected Error',
         701=>'No content available',

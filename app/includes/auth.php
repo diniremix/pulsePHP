@@ -220,7 +220,7 @@ function authenticate(\Slim\Route $route) {
         }
     }else{
         // api key is missing in header
-        echoRespnse(604, MISSSING_API_KEY);
+        echoRespnse(604, MISSING_API_KEY);
         $app->stop();
     }
 }
