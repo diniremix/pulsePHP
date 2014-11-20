@@ -20,7 +20,7 @@ class Database extends RedBean_Facade{
 				break;
 			case 'cubrid':
 				if(!defined('DB_PORT')){
-					return 'Cubrid: Port number is required';
+					return MISSING_PORT_NUMBER;
 				}
 				self::$connection=$database_default.':host='.DB_HOST.';port='.DB_PORT.';dbname='.DB_NAME;
 				break;
@@ -28,11 +28,11 @@ class Database extends RedBean_Facade{
 				self::$connection=$database_default.':/app/storage/'.DB_NAME.'sqlite';
 				break;
 			default:
-				return 'Error: Database driver not allowed';
+				return DATABASE_DRIVER_NOT_ALLOWED;
 				break;
 		}
 		return self::setup(self::$connection,DB_USERNAME,DB_PASSWORD);
-	}
+	}//init
 
 	public function save($table,$dataStore){
 		try{
@@ -133,7 +133,7 @@ class Database extends RedBean_Facade{
         $i=1;
 
         if(!is_array($fields)){
-            return "Se esperaba un array con campos";
+            return MISSING_ARRAY_FIELDS;
         }else{
             $totField=count($fields);
             foreach($fields as $key => $value){
@@ -150,7 +150,7 @@ class Database extends RedBean_Facade{
 
         $i=1;
         if(!is_array($tables)){
-            return "Se esperaba un array con nombres de tablas";
+            return MISSING_ARRAY_TABLENAMES;
         }else{
             $sql.=' FROM ';
             $tottables=count($tables);
@@ -172,69 +172,5 @@ class Database extends RedBean_Facade{
         $result = self::execQuery($sql);
         return $result;
     }//select
-
-/*====================================== Tasks ====================================*/
-
-    /**
-     * Fetching all user tasks
-     * @param String $user_id id of the user
-     */
-    public function getAllUserTasks($user_id) {
-    	$task=R::getAll( 'SELECT t.* FROM tasks t, user_tasks ut WHERE t.id = ut.task_id AND ut.user_id = ?', 
-            array($user_id) 
-        );
-        if ($task){
-            return $task;
-        }else{
-            return NULL;
-        }
-    }
-
-    /**
-     * Creating new task
-     * @param String $user_id user id to whom task belongs to
-     * @param String $task task text
-     */
-    public function createTask($user_id, $task) {        
-        $new_task_id=self::save('tasks',$task);
-        if($new_task_id>0){
-            $result=self::createUserTask($user_id, $new_task_id);
-            if($result){
-                return $new_task_id;
-            }else{
-                return NULL;
-            }
-        }else{
-            return NULL;
-        }
-    }
-
-    /**
-     * Function to assign a task to user
-     * @param String $user_id id of the user
-     * @param String $task_id id of the task
-     */
-    public function createUserTask($user_id, $task_id) {
-        //$user_tasks= array();
-        //$user_tasks['user_id']=$user_id;
-        //$user_tasks['task_id']=$task_id;
-        //$result=self::save('user_tasks',$user_tasks);
-        $result=R::exec( 'INSERT INTO user_tasks(user_id, task_id) values(?, ?)', array($user_id,$task_id));
-        return $result;
-    }
-
-    /**
-     * Fetching single task
-     * @param String $task_id id of the task
-     * @param String $user_id id of the user
-     */
-    public function getTask($task_id, $user_id) {
-        $task=R::getRow('SELECT t.id, t.task, t.status, t.created_at from tasks t, user_tasks ut WHERE t.id = ? AND ut.task_id = t.id AND ut.user_id = ?',array($task_id, $user_id));
-        if ($task){
-            return $task;
-        } else {
-            return NULL;
-        }
-    }
 }
 ?>
