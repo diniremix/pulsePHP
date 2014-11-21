@@ -8,12 +8,12 @@ class Auth extends Database{
     private static $cost = '$10';
 
     // mainly for internal use
-    public static function unique_salt() {
+    private static function unique_salt() {
         return substr(sha1(mt_rand()), 0, 22);
     }
  
     // this will be used to generate a hash
-    public static function hash($password) {
+    private static function hash($password) {
  
         return crypt($password, self::$algo .
                 self::$cost .
@@ -21,7 +21,7 @@ class Auth extends Database{
     }
  
     // this will be used to compare a password against a hash
-    public static function check_password($hash, $password) {
+    private static function check_password($hash, $password) {
         $full_salt = substr($hash, 0, 29);
         $new_hash = crypt($password, $full_salt);
         return ($hash == $new_hash);
@@ -30,7 +30,7 @@ class Auth extends Database{
     /**
      * Generating random Unique SHA1 String for user Api key
      */
-    public static function generateApiKey() {
+    private static function generateApiKey() {
         return sha1(uniqid(rand(), true));
     }
 
@@ -39,7 +39,7 @@ class Auth extends Database{
      * @param  [array] $fields [password to generate]
      * @return [string] hash [sha1 hash]
      */
-    public static function generatePasswordHash($fields) {
+    private static function generatePasswordHash($fields) {
         $password=$fields['password'];
         $password_hash=md5($password.date("Y"));
         $hash=sha1($password_hash.date("Y"));
@@ -181,47 +181,44 @@ class Auth extends Database{
         }else{
             return NULL;
         }
-
     }
-}//class
 
-/**
- * Adding Middle Layer to authenticate every request
- * Checking if the request has valid api key in the 'Authorization' header
- * @param  SlimRoute $route [Slim route]
- * @return [string] $user_id [a valid user ID]
- */
-function authenticate(\Slim\Route $route) {
-    // Getting request headers
-    $headers = apache_request_headers();
-    $app = \Slim\Slim::getInstance();
-    
-    // Verifying Authorization Header
-    if (isset($headers['public_key'])) {
-        $bc= new baseController();
-        // get the api key
-        $api_key = $headers['public_key'];
-
-        // validating api key
-        if (Auth::isValidApiKey($api_key)) {
-            global $user_id;
-            // get user primary key id
-            $userID = Auth::getUserId($api_key);
-            if ($userID != NULL){
-                $user_id = $userID;
+    /**
+     * Adding Middle Layer to authenticate every request
+     * Checking if the request has valid api key in the 'Authorization' header
+     * @param  SlimRoute $route [Slim route]
+     * @return [string] $user_id [a valid user ID]
+     */
+    public static function  authenticate(\Slim\Route $route) {
+        // Getting request headers
+        $headers = apache_request_headers();
+        $app = \Slim\Slim::getInstance();
+        
+        // Verifying Authorization Header
+        if (isset($headers['public_key'])) {
+            // get the api key
+            $api_key = $headers['public_key'];
+            // validating api key
+            if (Auth::isValidApiKey($api_key)) {
+                global $user_id;
+                // get user primary key id
+                $userID = Auth::getUserId($api_key);
+                if ($userID != NULL){
+                    $user_id = $userID;
+                }else{
+                    echoRespnse(602, EXPIRED_API_KEY);
+                    $app->stop();
+                }
             }else{
-                echoRespnse(602, EXPIRED_API_KEY);
+                // api key is not present in users table
+                echoRespnse(603, INVALID_API_KEY);
                 $app->stop();
             }
         }else{
-            // api key is not present in users table
-            echoRespnse(603, INVALID_API_KEY);
+            // api key is missing in header
+            echoRespnse(604, MISSING_API_KEY);
             $app->stop();
         }
-    }else{
-        // api key is missing in header
-        echoRespnse(604, MISSING_API_KEY);
-        $app->stop();
     }
-}
+}//class
 ?>
