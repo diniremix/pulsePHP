@@ -159,4 +159,24 @@ function loadRoutes(){
     return $routes;
 }
 
+function loadRoutesOnDemand($routesFiles){
+    $dir=APP_ABSPATH.ROUTES_APP;
+    $appRoutes=array('application.php','errors.php');
+    $routes=array();
+    if($dh = opendir($dir)){
+        foreach ($appRoutes as $appRoute) {
+            if(file_exists($dir.$appRoute)){
+                array_push($routes, $dir.$appRoute);
+            }
+        }
+        foreach ($routesFiles as $file) {
+            if(file_exists($dir.$file.".php")){
+                array_push($routes, $dir.$file.".php");
+            }
+        }
+        closedir($dh);
+    }
+    return $routes;
+}
+
 ?>
