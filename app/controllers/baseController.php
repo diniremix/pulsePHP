@@ -1,14 +1,14 @@
 <?php 
 class baseController {
 	function __construct(){
-		require_once (APP_ABSPATH.'../includes/database.php');
+		require_once (APP_ABSPATH.'includes/database.php');
         Database::init();
 	}
 
 	function createIntance($class,$app){
-		$model=APP_ABSPATH."../models/".strtolower($class).".php";
+		$model=APP_ABSPATH."models/".strtolower($class).".php";
 		$controllerName=strtolower($class)."Controller";
-		$controller=APP_ABSPATH."../controllers/".$controllerName.".php";
+		$controller=APP_ABSPATH."controllers/".$controllerName.".php";
 		
 		if(file_exists($model) && file_exists($controller)){
 			include_once($model);
