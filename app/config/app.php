@@ -1,13 +1,12 @@
 <?php 
 /*=========== App Configuration ==========*/
-define('APP_ABSPATH', dirname(__FILE__).'/');
-require_once(APP_ABSPATH.'Config.php');
-require_once(APP_ABSPATH.'errorCodes.php');
-require_once(APP_ABSPATH.'../includes/utils.php');
-require_once(APP_ABSPATH.'../includes/database.php');
-require_once(APP_ABSPATH.'../includes/auth.php');
-require_once(APP_ABSPATH.'../controllers/baseController.php');
-require_once('../app/vendor/Slim/Slim.php');
+require_once(APP_ABSPATH.'config/Config.php');
+require_once(APP_ABSPATH.'config/errorCodes.php');
+require_once(APP_ABSPATH.'includes/utils.php');
+require_once(APP_ABSPATH.'includes/database.php');
+require_once(APP_ABSPATH.'includes/auth.php');
+require_once(APP_ABSPATH.'controllers/baseController.php');
+require_once(APP_ABSPATH.'vendor/Slim/Slim.php');
 
 /*====================== App Route Configuration =====================*/
 // initialize Slim
