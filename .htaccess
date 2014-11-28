@@ -1,18 +1,12 @@
-#Hacer las url amigables
-RewriteEngine on  
-RewriteBase /pulsephp/  
-RewriteCond %{REQUEST_FILENAME} !-d  
-RewriteCond %{REQUEST_FILENAME} !-f  
-RewriteCond %{REQUEST_FILENAME} !-l  
-RewriteRule ^(.+)$ index.php?url=$1 [QSA,NC,L]  
+RewriteEngine On
 
-#No mostrar contenido de carpetas
-DirectoryIndex index.php index.html index.htm
-Options -Indexes +MultiViews +FollowSymlinks
-IndexIgnore *
+# Some hosts may require you to use the `RewriteBase` directive.
+# If you need to use the `RewriteBase` directive, it should be the
+# absolute physical path to the directory that contains this htaccess file.
+#
+# RewriteBase /
 
-#Denegar acceso a multiples archivos
-<FilesMatch ".(htaccess|htpasswd|ini|sql|json)$">
-Order Allow,Deny
-Deny from all
-</FilesMatch>
+#RewriteRule ^ index.php [QSA,L]
+
+RewriteCond %{REQUEST_FILENAME} !-f 
+RewriteRule ^(.*)$ %{ENV:BASE}index.php [QSA,L]
