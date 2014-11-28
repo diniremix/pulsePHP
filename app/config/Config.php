@@ -12,7 +12,7 @@ define('DB_DEFAULT', 'mysql');
 define('APP_ERROR','Application Error');
 define('APP_MSG','Application Message');
 define('APP_STAT','Application Status');
-define('ROUTES_APP','../routes/');
+define('ROUTES_APP','routes/');
 define('API_NAME','PulsePHP');
 define('USE_API','/v1');
 define('API_VERSION','v2.1.3');
