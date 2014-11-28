@@ -1,12 +1,12 @@
 <?php
-require_once(APP_ABSPATH.'../vendor/redbean/rb.php');
+require_once(APP_ABSPATH.'vendor/redbean/rb.php');
 
 class Database extends RedBean_Facade{		
 	
 	private static $connection='';
 	
 	function __construct(){
-		require_once(APP_ABSPATH.'Config.php');
+		require_once(APP_ABSPATH.'config/Config.php');
 		R::freeze(true);
 	}
 
