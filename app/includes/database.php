@@ -25,13 +25,13 @@ class Database extends RedBean_Facade{
 				self::$connection=$database_default.':host='.DB_HOST.';port='.DB_PORT.';dbname='.DB_NAME;
 				break;
 			case 'sqlite':
-				self::$connection=$database_default.':/app/storage/'.DB_NAME.'sqlite';
+                self::$connection=$database_default.':app/storage/'.DB_NAME.'.sqlite';
 				break;
 			default:
 				return DATABASE_DRIVER_NOT_ALLOWED;
 				break;
 		}
-		return self::setup(self::$connection,DB_USERNAME,DB_PASSWORD);
+        return self::setup(self::$connection,DB_USERNAME,DB_PASSWORD);
 	}//init
 
 	public function save($table,$dataStore){
