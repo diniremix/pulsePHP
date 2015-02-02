@@ -1,8 +1,7 @@
 <?php 
 class baseController {
 	function __construct(){
-		require_once (APP_ABSPATH.'includes/database.php');
-        Database::init();
+		Database::init();
 	}
 
 	function createIntance($class,$app){
