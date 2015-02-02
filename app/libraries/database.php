@@ -3,35 +3,47 @@ require_once(APP_ABSPATH.'vendor/redbean/rb.php');
 
 class Database extends RedBean_Facade{		
 	
-	private static $connection='';
+	private static $connection=NULL;
 	
 	function __construct(){
-		require_once(APP_ABSPATH.'config/Config.php');
-		R::freeze(true);
-	}
+        R::freeze(true);
+    }
 
-	public static function init(){						
-		$database_default=strtolower(DB_DEFAULT);
-		switch ($database_default) {
-			case 'mysql':
-			case 'postgresql':
-			case 'pgsql':
-				self::$connection=$database_default.':host='.DB_HOST.';dbname='.DB_NAME;
-				break;
-			case 'cubrid':
-				if(!defined('DB_PORT')){
-					return MISSING_PORT_NUMBER;
-				}
-				self::$connection=$database_default.':host='.DB_HOST.';port='.DB_PORT.';dbname='.DB_NAME;
-				break;
-			case 'sqlite':
-                self::$connection=$database_default.':app/storage/'.DB_NAME.'.sqlite';
-				break;
-			default:
-				return DATABASE_DRIVER_NOT_ALLOWED;
-				break;
-		}
-        return self::setup(self::$connection,DB_USERNAME,DB_PASSWORD);
+    public static function init(){
+        global $databases;
+		$dbDefault=strtolower($databases['DB_DEFAULT']);
+        switch ($dbDefault) {
+            case 'none':        
+                return NOT_USING_DATABASE;
+                break;
+            case 'mysql':
+            case 'postgresql':
+            case 'pgsql':
+                self::$connection=$dbDefault.':host='.$databases[$dbDefault]['DB_HOST'].';dbname='.$databases[$dbDefault]['DB_NAME'];
+                break;
+            case 'cubrid':
+                if(!defined('DB_PORT')){
+                    return MISSING_PORT_NUMBER;
+                }
+                self::$connection=$dbDefault.':host='.$databases[$dbDefault]['DB_HOST'].';port='.$databases[$dbDefault]['DB_PORT'].';dbname='.$databases[$dbDefault]['DB_NAME'];
+                break;
+            case 'sqlite':
+                self::$connection=$dbDefault.':app/storage/'.$databases[$dbDefault]['DB_NAME'].SQLITE_EXT_FILE;
+                break;
+            default:
+                self::$connection=NULL;
+                break;
+        }
+
+        if(self::$connection!=NULL){
+            if($dbDefault==='sqlite'){
+                return self::setup(self::$connection);
+            }else{
+                return self::setup(self::$connection,$databases[$dbDefault]['DB_USERNAME'],$databases[$dbDefault]['DB_PASSWORD']);
+            }
+        }else{
+            return DATABASE_DRIVER_NOT_ALLOWED;
+        }
 	}//init
 
 	public function save($table,$dataStore){
