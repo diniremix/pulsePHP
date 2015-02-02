@@ -1,23 +1,15 @@
 <?php
-/*=========== Database Configuration ==========*/
-define('DB_USERNAME', 'root');
-define('DB_PASSWORD', '');
-define('DB_HOST', 'localhost');
-define('DB_NAME', 'taskfm');
-
-define('DB_PORT', '3306');
-define('DB_DEFAULT', 'mysql');
-
 /*=========== App Configuration ==========*/
+define('API_NAME','PulsePHP');
+define('USE_API','/v1');
+define('API_VERSION','v2.1.5');
+define('API_FULLNAME',API_NAME.' '.API_VERSION);
+define('ROUTES_APP','routes/');
+define('SQLITE_EXT_FILE','.sqlite');
+
 define('APP_ERROR','Application Error');
 define('APP_MSG','Application Message');
 define('APP_STAT','Application Status');
-define('ROUTES_APP','routes/');
-define('API_NAME','PulsePHP');
-define('USE_API','/v1');
-define('API_VERSION','v2.1.3');
-define('API_FULLNAME',API_NAME.' '.API_VERSION);
-//define('PREFIX_FUNCTION','fn_');
 
 /*=========== content type Configuration ==========*/
 define('CONTENT_JSON','application/json');
@@ -27,15 +19,17 @@ define('APP_TYPE_CONTENT_DEFAULT',CONTENT_JSON);
 
 /*=========== Database messages ==========*/
 define('DATABASE_DRIVER_NOT_ALLOWED', 'Error: Database driver not allowed');
+define('NOT_USING_DATABASE', 'Not using a Database');
 define('MISSING_ARRAY_FIELDS', 'Array field(s) is missing');
 define('MISSING_ARRAY_TABLENAMES', 'Array table name(s) is missing');
 define('MISSING_PORT_NUMBER', 'Cubrid: Port number is required');
 
-/*=========== messages ==========*/
+/*=========== API messages ==========*/
 define('EXPIRED_API_KEY', 'Access Denied. Api key is expired');
 define('INVALID_API_KEY', 'Access Denied. Invalid Api key');
 define('MISSING_API_KEY', 'Api key is missing');
 
+/*=========== general messages ==========*/
 define('USER_CREATED_SUCCESSFULLY', 'User created successfully');
 define('USER_CREATE_FAILED', 'User create failed');
 define('USER_ALREADY_EXISTED', 'User already existed');
