@@ -1,10 +1,11 @@
 <?php 
 /*=========== App Configuration ==========*/
 require_once(APP_ABSPATH.'config/Config.php');
+require_once(APP_ABSPATH.'config/databases.php');
 require_once(APP_ABSPATH.'config/errorCodes.php');
-require_once(APP_ABSPATH.'includes/utils.php');
-require_once(APP_ABSPATH.'includes/database.php');
-require_once(APP_ABSPATH.'includes/auth.php');
+require_once(APP_ABSPATH.'libraries/utils.php');
+require_once(APP_ABSPATH.'libraries/database.php');
+require_once(APP_ABSPATH.'libraries/auth.php');
 require_once(APP_ABSPATH.'controllers/baseController.php');
 require_once(APP_ABSPATH.'vendor/Slim/Slim.php');
 
