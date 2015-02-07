@@ -195,9 +195,9 @@ class Auth extends Database{
         $app = \Slim\Slim::getInstance();
         
         // Verifying Authorization Header
-        if (isset($headers['public_key'])) {
+        if (isset($headers[PUBLIC_KEY_TOKEN])) {
             // get the api key
-            $api_key = $headers['public_key'];
+            $api_key = $headers[PUBLIC_KEY_TOKEN];
             // validating api key
             if (Auth::isValidApiKey($api_key)) {
                 global $user_id;
@@ -211,7 +211,7 @@ class Auth extends Database{
                 }
             }else{
                 // api key is not present in users table
-                echoRespnse(603, INVALID_API_KEY);
+                echoRespnse(603, INVALID_API_KEY,$headers[PUBLIC_KEY_TOKEN]);
                 $app->stop();
             }
         }else{
@@ -221,4 +221,5 @@ class Auth extends Database{
         }
     }
 }//class
+
 ?>

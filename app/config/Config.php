@@ -25,6 +25,7 @@ define('MISSING_ARRAY_TABLENAMES', 'Array table name(s) is missing');
 define('MISSING_PORT_NUMBER', 'Cubrid: Port number is required');
 
 /*=========== API messages ==========*/
+define('PUBLIC_KEY_TOKEN', 'public_key');
 define('EXPIRED_API_KEY', 'Access Denied. Api key is expired');
 define('INVALID_API_KEY', 'Access Denied. Invalid Api key');
 define('MISSING_API_KEY', 'Api key is missing');
