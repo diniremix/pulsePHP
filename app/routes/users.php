@@ -17,28 +17,28 @@ $user = new $Users();
 $app->group(USE_API, function () use ($app) {
     $app->group('/users', function () use ($app) {
         
-        $app->get('/', function()  use ($app){
+        $app->get('/', 'Auth::authenticate', function()  use ($app){
             global $user;
             $user->getAll($app);
         });
 
-        $app->get('/:id', function($item_id) use ($app){
+        $app->get('/:id', 'Auth::authenticate',function($item_id) use ($app){
             global $user;
             $user->getOne($app,$item_id);
         });
 
-        $app->post('/', function()  use ($app){
+        $app->post('/', 'Auth::authenticate', function()  use ($app){
             //echoRespnse(0, 'ejemplo de api /v1/user/id put');// actualizar
             global $user;
             $user->createUser($app);
         });
 
-        $app->put('/:id', function($item_id)  use ($app){
+        $app->put('/:id', 'Auth::authenticate', function($item_id)  use ($app){
             global $user;
             $user->updateUser($app,$item_id);
         });
 
-        $app->delete('/:id', function($item_id)  use ($app){
+        $app->delete('/:id', 'Auth::authenticate', function($item_id)  use ($app){
             global $user;
             $user->deleteUser($app,$item_id);
         });        
