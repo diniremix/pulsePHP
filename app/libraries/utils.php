@@ -1,5 +1,9 @@
 <?php 
-
+/**
+ * [isJSONData to evaluate for a valid JSON]
+ * @param  [JSON]  $jsonData [JSON to validate]
+ * @return [a valid JSON or application error]
+ */
 function isJSONData($jsonData){
     $decodedJson = json_decode(stripslashes($jsonData), TRUE);
     if(json_last_error() == JSON_ERROR_NONE){
@@ -10,6 +14,7 @@ function isJSONData($jsonData){
         $app->stop();
     }
 }
+
 /**
  * Verifying required params posted or not
  */
@@ -159,6 +164,11 @@ function loadRoutes(){
     return $routes;
 }
 
+/**
+ * [loadRoutesOnDemand search for custom modules]
+ * @param  [array] $routesFiles [modules array]
+ * @return [array]              [modules array paths]
+ */
 function loadRoutesOnDemand($routesFiles){
     $dir=APP_ABSPATH.ROUTES_APP;
     $appRoutes=array('application.php','errors.php');
@@ -177,6 +187,24 @@ function loadRoutesOnDemand($routesFiles){
         closedir($dh);
     }
     return $routes;
+}
+
+/**
+ * [deleteStorage description]
+ * @param  [type] $extFiles [file extension to delete]
+ */
+function deleteStorage($extFiles){
+    $dir=STORAGE_APP;
+    if($dh = opendir($dir)){
+        while(($file = readdir($dh))!== false){
+            if(file_exists($dir.$file)){
+                if (preg_match("/$extFiles/i", $dir.$file)){
+                    unlink($dir.$file);
+                }
+            }
+        }
+        closedir($dh);
+    }
 }
 
 ?>
