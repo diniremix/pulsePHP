@@ -5,6 +5,7 @@ define('USE_API','/v1');
 define('API_VERSION','v2.1.5');
 define('API_FULLNAME',API_NAME.' '.API_VERSION);
 define('ROUTES_APP','routes/');
+define('STORAGE_APP','app/storage/');
 define('SQLITE_EXT_FILE','.sqlite');
 
 define('APP_ERROR','Application Error');
