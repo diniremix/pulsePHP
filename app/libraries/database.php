@@ -130,7 +130,8 @@ class Database extends RedBean_Facade{
                 return NULL;
             }
         }else{
-            $result = R::findAndExport($table);
+            //$result = R::findAndExport($table);
+            $result = R::getAll('select * from '.$table);
         }
       
         if(!is_array($result)){
