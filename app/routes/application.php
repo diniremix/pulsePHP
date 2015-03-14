@@ -52,6 +52,6 @@ $app->group(USE_API, function () use ($app) {
             echoRespnse(900,USER_ALREADY_EXISTED);
         }
     });
-
 });
+
 ?>
