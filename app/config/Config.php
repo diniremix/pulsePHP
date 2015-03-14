@@ -33,7 +33,9 @@ define('MISSING_API_KEY', 'Api key is missing');
 
 /*=========== general messages ==========*/
 define('USER_CREATED_SUCCESSFULLY', 'User created successfully');
+define('USER_UPDATED_SUCCESSFULLY', 'User updated successfully');
 define('USER_CREATE_FAILED', 'User create failed');
+define('USER_UPDATED_FAILED', 'User updated failed');
 define('USER_ALREADY_EXISTED', 'User already existed');
 
 define('DELETED_SUCCESSFULLY', 'Record deleted successfully');
