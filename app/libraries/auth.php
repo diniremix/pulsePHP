@@ -154,7 +154,7 @@ class Auth extends Database{
         }
         $cond.="'".$fields."' LIMIT 1";
 
-        $user=R::getRow('SELECT name, username, email, api_key, status, created_at FROM users WHERE '.$cond);
+        $user=R::getRow('SELECT username, role_id, api_key, status FROM users WHERE '.$cond);
         if ($user){
             return $user;
         } else {
