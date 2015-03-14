@@ -30,7 +30,7 @@ some values for DB_DEFAULT:
 			'DB_HOST' => '',
 			'DB_NAME' => '',
 		),
-
+		
 		'postgresql' => array(
 			'DB_USERNAME' => '',
 			'DB_PASSWORD' => '',
