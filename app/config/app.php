@@ -6,6 +6,8 @@ require_once(APP_ABSPATH.'config/errorCodes.php');
 require_once(APP_ABSPATH.'libraries/utils.php');
 require_once(APP_ABSPATH.'libraries/database.php');
 require_once(APP_ABSPATH.'libraries/auth.php');
+require_once(APP_ABSPATH.'libraries/sessions.php');
+require_once(APP_ABSPATH.'libraries/pulseAcl.php');
 require_once(APP_ABSPATH.'controllers/baseController.php');
 require_once(APP_ABSPATH.'vendor/Slim/Slim.php');
 
@@ -22,7 +24,8 @@ $app = new \Slim\Slim(array(
 $app->configureMode('production', function () use ($app) {
     $app->config(array(
         'log.enable' => true,
-        'debug' => false
+        'debug' => false,
+        'templates.path' => './templates/'
     ));
 });
 
@@ -30,7 +33,8 @@ $app->configureMode('production', function () use ($app) {
 $app->configureMode('development', function () use ($app) {
     $app->config(array(
         'log.enable' => false,
-        'debug' => true
+        'debug' => true,
+        'templates.path' => './templates/'
     ));
 });
 
