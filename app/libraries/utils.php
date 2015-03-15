@@ -207,4 +207,17 @@ function deleteStorage($extFiles){
     }
 }
 
+/**
+ * [templateExist description]
+ * @param  [string] $page [name of page]
+ * @return [bool]       [page exist or not]
+ */
+function templateExist($page){
+    if(file_exists(TEMPLATES_PATH.$page.TEMPLATES_EXT_FILE)){
+        return true;
+    }else{
+        return false;
+    }
+}
+
 ?>
