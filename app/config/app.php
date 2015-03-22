@@ -25,7 +25,7 @@ $app->configureMode('production', function () use ($app) {
     $app->config(array(
         'log.enable' => true,
         'debug' => false,
-        'templates.path' => './templates/'
+        'templates.path' => './'.TEMPLATES_PATH
     ));
 });
 
@@ -34,7 +34,7 @@ $app->configureMode('development', function () use ($app) {
     $app->config(array(
         'log.enable' => false,
         'debug' => true,
-        'templates.path' => './templates/'
+        'templates.path' => './'.TEMPLATES_PATH
     ));
 });
 
