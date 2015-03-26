@@ -1,16 +1,22 @@
 <?php
 /*=========== App Configuration ==========*/
+date_default_timezone_set("America/Bogota");
 define('API_NAME','PulsePHP');
 define('USE_API','/v1');
-define('API_VERSION','v2.1.5');
+define('API_VERSION','v2.1.6');
 define('API_FULLNAME',API_NAME.' '.API_VERSION);
 define('ROUTES_APP','routes/');
 define('STORAGE_APP','app/storage/');
 define('SQLITE_EXT_FILE','.sqlite');
+define('USER_DEFAULT_TABLE','users');
 
 define('APP_ERROR','Application Error');
 define('APP_MSG','Application Message');
 define('APP_STAT','Application Status');
+
+define('GITHUB_URL_APP','https://github.com/diniremix/pulsePHP');
+define('TEMPLATES_PATH','templates/');
+define('TEMPLATES_EXT_FILE','.html');
 
 /*=========== content type Configuration ==========*/
 define('CONTENT_JSON','application/json');
