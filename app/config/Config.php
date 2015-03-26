@@ -1,6 +1,7 @@
 <?php
 /*=========== App Configuration ==========*/
 date_default_timezone_set("America/Bogota");
+
 define('API_NAME','PulsePHP');
 define('USE_API','/v1');
 define('API_VERSION','v2.1.6');
@@ -58,6 +59,8 @@ define('DEFAULT_ERROR_MESSAGE', 'An error occurred. Please try again!');
 define('DEFAULT_DATA_CONTENT', 'No content available');
 
 define('RESOURCE_NOT_EXIST', 'The requested resource doesn\'t exists');
+define('NON_AUTHORITATIVE_INFORMATION', 'Non-Authoritative Information');
+define('DONT_HAVE_PERMISSION', 'you don\'t have permission to access the requested resource');
 
 define('MODEL_NOT_FOUND', 'Model not found');
 define('CONTROLLER_NOT_FOUND', 'Controller not found');

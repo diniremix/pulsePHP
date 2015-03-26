@@ -74,6 +74,7 @@
 		1003=>'Email address is not valid',
         1004=>'An error occurred. Please try again',
         1005=>'Required fields are empty or missing',
+        1006=>'you don\'t have permission to access the requested resource',
 		1100=>'Invalid code Error'
     );
 ?>
