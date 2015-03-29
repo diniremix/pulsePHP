@@ -154,7 +154,7 @@ class Auth extends Database{
         }
         $cond.="'".$fields."' LIMIT 1";
 
-        $user=R::getRow('SELECT username, role_id, api_key, status FROM users WHERE '.$cond);
+        $user=R::getRow('SELECT id, username, role_id, api_key, status_id FROM users WHERE '.$cond);
         if ($user){
             return $user;
         } else {
@@ -175,7 +175,8 @@ class Auth extends Database{
         }else{
             $cond="id";
         }
-        $UserExist=self::execQuery('SELECT id from users WHERE '.$cond.' =?', array($fields));
+        //$UserExist=self::execQuery('SELECT id from users WHERE '.$cond.' =?', array($fields));
+        $UserExist=self::execQuery('SELECT id from persons WHERE '.$cond.' =?', array($fields));
         if ($UserExist) {
             return $UserExist;
         }else{
