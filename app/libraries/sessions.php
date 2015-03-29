@@ -6,9 +6,12 @@ class Session {
 
     public static function createSession($userSession){
         session_start();
+        $_SESSION["userid"] = $userSession['id'];
         $_SESSION["username"] = $userSession['username'];
         $_SESSION["role"] = $userSession['role_id'];
         $_SESSION["api_key"] = $userSession['api_key'];
+        //create log
+        pulseLog::register();
     }
 
     public static function verifySession(){
