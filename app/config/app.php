@@ -8,6 +8,7 @@ require_once(APP_ABSPATH.'libraries/database.php');
 require_once(APP_ABSPATH.'libraries/auth.php');
 require_once(APP_ABSPATH.'libraries/sessions.php');
 require_once(APP_ABSPATH.'libraries/pulseAcl.php');
+require_once(APP_ABSPATH.'libraries/pulseLog.php');
 require_once(APP_ABSPATH.'controllers/baseController.php');
 require_once(APP_ABSPATH.'vendor/Slim/Slim.php');
 
