@@ -1,15 +1,8 @@
 <?php
 
 class Acl {
-    private static $nameAcl;
-        
-    function __construct($newAcl) {
-        //$_SESSION["perms"] = $site_pages;
-    }
-
+   
     public static function createAcl($newAcl){
-
-        self::$nameAcl=$newAcl;
         $role=Session::getSessionValue('role');
         $dbo = new Database();
         $cond="role_id=".$role;
@@ -25,7 +18,6 @@ class Acl {
 
     public static function hasPermissions($page){
         $perms=Session::getUserSession();
-        $perm=self::$nameAcl;
         if(in_array($page, $perms['user_permission'])){
             return true;
         }else{
