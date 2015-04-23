@@ -2,11 +2,13 @@
 /*=========== App Route functions ==========*/
 /*This file is part of the PulsePHP, Be careful with this file */
 
-$app->group('/', function () use ($app) {
-    $app->map('/', function() use ($app){
-        echoRespnse(0, 'Aloha! from '.API_FULLNAME.' please using '.'/api'.USE_API.' instead root');
-    })->via('GET', 'POST');
-});
+if(USE_ONLY_API){
+    $app->group('/', function () use ($app) {
+        $app->map('/', function() use ($app){
+            echoRespnse(0, 'Aloha! from '.API_FULLNAME.' please using '.'/api'.USE_API.' instead root');
+        })->via('GET', 'POST');
+    });
+}
 
 $app->group('/api', function () use ($app) {
     $app->map('/', function() use ($app){
