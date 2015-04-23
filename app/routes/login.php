@@ -14,7 +14,7 @@ $app->group('/api', function () use ($app) {
                 if (!is_null($user)){
                     Session::createSession($user);
                     Acl::createAcl('user_permission');
-                    echoRespnse(0,DEFAULT_MESSAGE,$user);
+                    echoRespnse(0,DEFAULT_MESSAGE);
                 }else{
                     // unknown error occurred
                     echoRespnse(1004,DEFAULT_ERROR_MESSAGE);
