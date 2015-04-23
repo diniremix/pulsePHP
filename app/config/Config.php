@@ -10,6 +10,7 @@ define('ROUTES_APP','routes/');
 define('STORAGE_APP','app/storage/');
 define('SQLITE_EXT_FILE','.sqlite');
 define('USER_DEFAULT_TABLE','users');
+define('USE_ONLY_API',TRUE);
 
 define('APP_ERROR','Application Error');
 define('APP_MSG','Application Message');
