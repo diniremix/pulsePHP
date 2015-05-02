@@ -7,10 +7,10 @@
 CREATE TABLE IF NOT EXISTS `log` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(11) unsigned NOT NULL,
-  `logged_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `logged_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `ip` varchar(50) CHARACTER SET latin1 COLLATE latin1_spanish_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `person_id` (`user_id`) USING BTREE,
+  KEY `user_id` (`user_id`) USING BTREE,
   CONSTRAINT `FK_log_users` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
