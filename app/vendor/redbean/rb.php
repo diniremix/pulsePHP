@@ -9456,7 +9456,7 @@ class RedBean_Facade
 	 */
 	public static function dispense( $type, $num = 1 )
 	{
-		if ( !preg_match( '/^[a-z0-9]+$/', $type ) && self::$strictType ) {
+		if ( !preg_match( '/^[a-z0-9_]+$/', $type ) && self::$strictType ) {
 			throw new RedBean_Exception_Security( 'Invalid type: ' . $type );
 		}
 
