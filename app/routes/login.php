@@ -72,6 +72,12 @@ $app->group('/api', function () use ($app) {
                 echoRespnse(900,USER_ALREADY_EXISTED);
             }
         });
+
+        $app->map('/logout',  function()  use ($app){
+            Session::deleteSession();
+            echoRespnse(0,DEFAULT_MESSAGE);
+        })->via('GET', 'POST');
+
     });
 });
 
