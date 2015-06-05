@@ -221,6 +221,21 @@ class Auth extends Database{
             $app->stop();
         }
     }
+
+    /**
+     * [verifySession Adding Middle Layer to verify the session on every request]
+     * @param  \Slim\Route $route [Slim route]
+     * @return [boolean]    true/false [if there is a session]
+     */
+    public static function verifySession(\Slim\Route $route) {
+        $app = \Slim\Slim::getInstance();
+        if(Session::verifySession()){
+            return true;
+        }else{
+            echoRespnse(203,NON_AUTHORITATIVE_INFORMATION);
+            $app->stop();
+        }
+    }
 }//class
 
 ?>
