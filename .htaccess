@@ -6,7 +6,8 @@ RewriteEngine On
 #
 # RewriteBase /
 
-#RewriteRule ^ index.php [QSA,L]
 
+RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f 
-RewriteRule ^(.*)$ %{ENV:BASE}index.php [QSA,L]
+RewriteRule ^ index.php [QSA,L]
+#RewriteRule ^(.*)$ %{ENV:BASE}index.php [QSA,L]
