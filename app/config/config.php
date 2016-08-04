@@ -2,23 +2,19 @@
 /*=========== App Configuration ==========*/
 date_default_timezone_set("America/Bogota");
 
-define('API_NAME','PulsePHP');
-define('USE_API','/v1');
-define('API_VERSION','v2.1.6');
-define('API_FULLNAME',API_NAME.' '.API_VERSION);
-define('ROUTES_APP','routes/');
-define('STORAGE_APP','app/storage/');
-define('SQLITE_EXT_FILE','.sqlite');
-define('USER_DEFAULT_TABLE','users');
-define('USE_ONLY_API',TRUE);
+define('API_NAME','/api');
+define('CODE_NAME','dynamo');
+define('API_VERSION','v2.2a');
+define('API_FULLNAME','pulsePHP '.API_VERSION);
 
-define('APP_ERROR','Application Error');
-define('APP_MSG','Application Message');
-define('APP_STAT','Application Status');
-
-define('GITHUB_URL_APP','https://github.com/diniremix/pulsePHP');
+define('ROUTES_PATH','routes/');
 define('TEMPLATES_PATH','templates/');
+define('STORAGE_PATH','app/storage/');
+
+define('SQLITE_EXT_FILE','.sqlite');
 define('TEMPLATES_EXT_FILE','.html');
+
+define('USER_DEFAULT_TABLE','users');
 
 /*=========== content type Configuration ==========*/
 define('CONTENT_JSON','application/json');
@@ -34,7 +30,8 @@ define('MISSING_ARRAY_TABLENAMES', 'Array table name(s) is missing');
 define('MISSING_PORT_NUMBER', 'Cubrid: Port number is required');
 
 /*=========== API messages ==========*/
-define('PUBLIC_KEY_TOKEN', 'public_key');
+define('INVALID_CODE_ERROR', 'Invalid code Error');
+define('PUBLIC_KEY_TOKEN', 'public_key_token');
 define('EXPIRED_API_KEY', 'Access Denied. Api key is expired');
 define('INVALID_API_KEY', 'Access Denied. Invalid Api key');
 define('MISSING_API_KEY', 'Api key is missing');
