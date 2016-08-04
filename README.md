@@ -1,12 +1,10 @@
-# PulsePHP
+# PulsePHP 2.2 (EN DESARROLLO)
 PHP **RESTful** API
-
 
 ## Requisitos
 - [Apache](http://www.apache.org/) Version 2.2.x o compatible
-- [PHP](http://www.php.net/) Version 5.3.8 o superior
-- [Slim a PHP micro framework (incluido)](http://www.slimframework.com/) Version 2.4.2 o superior
-- [RedBean on-the-fly ORM for PHP (incluido)](http://redbeanphp.com/) Version 3.5 o superior
+- [PHP](http://www.php.net/) Version 5.6 o superior
+- [Slim a PHP micro framework (incluido)](http://www.slimframework.com/) Version 2.6.2 o superior
 
 
 ## Instalacion
