@@ -2,10 +2,12 @@
 /*=========== App Configuration ==========*/
 date_default_timezone_set("America/Bogota");
 
+define('GITHUB_URL_APP','bar');
+define('CURRENT_NAME','foo');
 define('API_NAME','/api');
 define('CODE_NAME','dynamo');
 define('API_VERSION','v2.2a');
-define('API_FULLNAME','pulsePHP '.API_VERSION);
+define('API_FULLNAME','pulsePHP version '.API_VERSION);
 
 define('ROUTES_PATH','routes/');
 define('TEMPLATES_PATH','templates/');
