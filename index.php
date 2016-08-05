@@ -1,9 +1,6 @@
 <?php
-define('APP_ABSPATH', dirname(__FILE__).'/app/');
-require_once(APP_ABSPATH.'config/app.php');
-require_once(APP_ABSPATH.'route.php');
+define('APP_ABSPATH', dirname(__FILE__).DIRECTORY_SEPARATOR.'app');
+require_once(APP_ABSPATH.DIRECTORY_SEPARATOR.'config'.DIRECTORY_SEPARATOR.'app.php');
 
-//run the app
 $app->run();
-
 ?>
