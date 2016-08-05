@@ -1,18 +1,13 @@
 <?php 
-/*=========== App Configuration ==========*/
-require_once(APP_ABSPATH.'config/Config.php');
-require_once(APP_ABSPATH.'config/databases.php');
-require_once(APP_ABSPATH.'config/errorCodes.php');
-require_once(APP_ABSPATH.'libraries/utils.php');
-require_once(APP_ABSPATH.'libraries/database.php');
-require_once(APP_ABSPATH.'libraries/auth.php');
-require_once(APP_ABSPATH.'libraries/sessions.php');
-require_once(APP_ABSPATH.'libraries/pulseAcl.php');
-require_once(APP_ABSPATH.'libraries/pulseLog.php');
-require_once(APP_ABSPATH.'controllers/baseController.php');
-require_once(APP_ABSPATH.'vendor/Slim/Slim.php');
+namespace app\config;
+require_once(APP_ABSPATH.DIRECTORY_SEPARATOR.'libraries'.DIRECTORY_SEPARATOR.'modules.php');
 
-/*====================== App Route Configuration =====================*/
+use app\libraries\Modules;
+use app\libraries\Rest;
+
+// register Modules for pulsePHP
+Modules::registerModules();
+
 // initialize Slim
 \Slim\Slim::registerAutoloader();
 
@@ -39,7 +34,26 @@ $app->configureMode('development', function () use ($app) {
     ));
 });
 
-// User id from db - Global Variable
-$user_id = NULL;
-$bc= new baseController();
+
+// Default Routes
+$app->group('/', function () use ($app) {
+    $app->map('/', function() use ($app){
+        Rest::response(200, 'Aloha! from '.API_FULLNAME.', please using '.API_NAME.' instead root');
+    })->via('GET', 'POST');
+});
+
+$app->group(API_NAME, function () use ($app) {
+    $app->map('/', function() use ($app){
+        Rest::response(200, 'This is '.API_FULLNAME.', for more info visit: '.GITHUB_URL_APP);
+    })->via('GET', 'POST');
+});
+
+$app->notFound(function () use ($app) {
+    //$app->render('404.html');
+    Rest::response(702, NOT_FOUND);
+});
+
+// finally load routes for pulsePHP
+Modules::loadRoutes();
+
 ?>
