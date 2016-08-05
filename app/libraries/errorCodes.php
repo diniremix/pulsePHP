@@ -1,4 +1,5 @@
 <?php
+namespace app\libraries;
 class Errors {
     private static $_messages = array(
         //api error
@@ -36,7 +37,7 @@ class Errors {
 
     public static function getOne($_id){
         if(array_key_exists($_id, self::$_messages)){
-            return self::$messages[$_id];
+            return self::$_messages[$_id];
         }else{
             return INVALID_CODE_ERROR;
         }
