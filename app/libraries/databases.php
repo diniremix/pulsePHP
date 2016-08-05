@@ -28,7 +28,7 @@ class Database extends RedBean_Facade{
                 self::$connection=$dbDefault.':host='.$databases[$dbDefault]['DB_HOST'].';port='.$databases[$dbDefault]['DB_PORT'].';dbname='.$databases[$dbDefault]['DB_NAME'];
                 break;
             case 'sqlite':
-                self::$connection=$dbDefault.':'.STORAGE_APP.$databases[$dbDefault]['DB_NAME'].SQLITE_EXT_FILE;
+                self::$connection=$dbDefault.':'.STORAGE_PATH.$databases[$dbDefault]['DB_NAME'].SQLITE_EXT_FILE;
                 break;
             default:
                 self::$connection=NULL;
