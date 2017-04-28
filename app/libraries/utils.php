@@ -21,20 +21,15 @@ function isJSONData($jsonData){
 function verifyRequiredParams($required_fields) {
     $error = false;
     $error_fields = "";
-    $request_params = array();
-    $request_params = $_REQUEST;
 
-    if(isset($_REQUEST['jsonData'])){
-        $request_params=isJSONData($_REQUEST['jsonData']);
-    }else{
-        // Handling PUT request params
-        if ($_SERVER['REQUEST_METHOD'] == 'PUT'){
-            $app = \Slim\Slim::getInstance();
-            parse_str($app->request()->getBody(), $request_params);
-            if(isset($request_params['jsonData'])){
-                $request_params=isJSONData($request_params['jsonData']);
-            }
-        }
+    $app = \Slim\Slim::getInstance();
+    $req= $app->request()->getBody();
+    $request_params= isJSONData($req);
+
+    if ($_SERVER['REQUEST_METHOD'] == 'PUT'){
+        $app = \Slim\Slim::getInstance();
+        parse_str($app->request()->getBody(), $request_params);
+            $request_params=isJSONData($request_params);
     }
 
     foreach ($required_fields as $field) {
@@ -119,9 +114,9 @@ function echoRespnse($errorCode,$message,$data=NULL) {
     $response=array();
 
     if(!is_int($errorCode)){
-        $response['errorCode']=404;
+        $response['status']=404;
     }else{
-        $response['errorCode']=$errorCode;
+        $response['status']=$errorCode;
     }
 
     if(!is_array($message)){
