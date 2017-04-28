@@ -47,8 +47,8 @@ $app->group(API_NAME, function () use ($app) {
             echoRespnse(1006,DONT_HAVE_PERMISSION);
         });
 
-        $app->post('/', function()  use ($app){
-            echoRespnse(0,DEFAULT_MESSAGE,'please using '.'/api'.API_NAME.'/users/register instead this');
+        $app->post('/:id', function($item_id) use ($app){
+            echoRespnse(1006,DONT_HAVE_PERMISSION);
         });
 
         $app->put('/:id', function($item_id)  use ($app){
