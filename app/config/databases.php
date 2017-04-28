@@ -21,28 +21,42 @@ some values for DB_DEFAULT:
 		'DB_DEFAULT' => 'none',
 
 		'sqlite' => array(
-			'DB_NAME' => '',
+			'DB_NAME' => ''
 		),
 
 		'mysql' => array(
+			'DB_HOST' => 'localhost',
+			'DB_NAME' => '',
 			'DB_USERNAME' => '',
-			'DB_PASSWORD' => '',
+			'DB_PASSWORD' => ''
+		),
+
+		'mysql-prod' => array(
 			'DB_HOST' => '',
 			'DB_NAME' => '',
+			'DB_USERNAME' => '',
+			'DB_PASSWORD' => ''
 		),
 		
 		'postgresql' => array(
-			'DB_USERNAME' => '',
-			'DB_PASSWORD' => '',
 			'DB_HOST' => '',
 			'DB_NAME' => '',
+			'DB_USERNAME' => '',
+			'DB_PASSWORD' => ''
+		),
+
+		'postgresql-prod' => array(
+			'DB_HOST' => '',
+			'DB_NAME' => '',
+			'DB_USERNAME' => '',
+			'DB_PASSWORD' => ''
 		),
 
 		'cubrid' => array(
-			'DB_USERNAME' => '',
-			'DB_PASSWORD' => '',
 			'DB_HOST' => '',
 			'DB_NAME' => '',
+			'DB_USERNAME' => '',
+			'DB_PASSWORD' => '',
 			'DB_PORT' => ''
 		),
 	);
