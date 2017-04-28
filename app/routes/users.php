@@ -11,36 +11,55 @@ PUT     /apiVersion/user/[_id] Update an existing user
 DELETE  /apiVersion/user/[_id] Delete a user
 */
 
-$Users= $bc->createIntance('users',$app);
-$user = new $Users();
-
-$app->group('/api', function () use ($app) {
-    $app->group(USE_API, function () use ($app) {
-        $app->group('/users', function () use ($app) {
-            $app->get('/',  function()  use ($app){
-                global $user;
-                $user->getAll($app,'users');
-            });
-
-            //CRUD START
-            $app->get('/:id', function($item_id) use ($app){
-                global $user;
-                $user->getOne($app,$item_id);
-            });
-
-            $app->post('/', function()  use ($app){
-                echoRespnse(0,DEFAULT_MESSAGE,'please using '.'/api'.USE_API.'/users/register instead this');
-            });
-
-            $app->put('/:id', function($item_id)  use ($app){
-                echoRespnse(1006,DONT_HAVE_PERMISSION);
-            });
-
-            $app->delete('/:id', function($item_id)  use ($app){
-                echoRespnse(1006,DONT_HAVE_PERMISSION);
-            });        
-            //CRUD END
+$app->group(API_NAME, function () use ($app) {
+    $app->group('/users', function () use ($app) {
+        $app->get('/',  function()  use ($app){
+            $users= array(
+                array(
+                "name"=>'Peter',
+                "lastname"=>'Anderson',
+                "role_id"=>22
+                )
+            );
+            echoRespnse(0,DEFAULT_MESSAGE,$users);
         });
+
+        $app->post('/',  function()  use ($app){
+            $fields = array('username', 'password');
+            $formdata=verifyRequiredParams($fields);
+                $user= array(
+                array(
+                "name"=>'Peter',
+                "lastname"=>'Anderson',
+                "role_id"=>22,
+                "gravatar"=>'api/users/images/image1.png',
+                "role_name"=>'Software Developer',
+                "creation_date"=>'2016-09-16 16:37:57',
+                "specialization"=> array('Rest Api', 'PulsePHP'),
+                "localization"=>array(4.6739405,-74.0800225),
+                )
+            );
+            echoRespnse(0,DEFAULT_MESSAGE,$user);
+        });
+
+        //CRUD START
+        $app->get('/:id', function($item_id) use ($app){
+            echoRespnse(1006,DONT_HAVE_PERMISSION);
+        });
+
+        $app->post('/', function()  use ($app){
+            echoRespnse(0,DEFAULT_MESSAGE,'please using '.'/api'.API_NAME.'/users/register instead this');
+        });
+
+        $app->put('/:id', function($item_id)  use ($app){
+            echoRespnse(1006,DONT_HAVE_PERMISSION);
+        });
+
+        $app->delete('/:id', function($item_id)  use ($app){
+            echoRespnse(1006,DONT_HAVE_PERMISSION);
+        });
+        //CRUD END
     });
 });
+//});
 ?>

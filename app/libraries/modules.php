@@ -31,8 +31,8 @@ class Modules {
             //'network',
         ),
         'vendor' => array(
-            'Slim' => 'Slim-2.6.2/Slim/Slim.php',
-            //'redbean' => 'redbean/rb.php',
+            'Slim' => '/Slim/Slim.php',
+            'redbean' => '/redbean/rb.php',
         ),
     );
 

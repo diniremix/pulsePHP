@@ -3,7 +3,7 @@
 /*This file is part of the PulsePHP, Be careful with this file */
 
 $app->group('/api', function () use ($app) {
-    $app->group(USE_API, function () use ($app) {
+    $app->group(API_NAME, function () use ($app) {
         $app->post('/login', function() use ($app) {
             // check for required params
             $fields = array('username', 'password');
@@ -14,7 +14,7 @@ $app->group('/api', function () use ($app) {
                 if (!is_null($user)){
                     Session::createSession($user);
                     Acl::createAcl('user_permission');
-                    echoRespnse(0,DEFAULT_MESSAGE);
+                    echoRespnse(0,DEFAULT_MESSAGE, $user);
                 }else{
                     // unknown error occurred
                     echoRespnse(1004,DEFAULT_ERROR_MESSAGE);
@@ -54,8 +54,12 @@ $app->group('/api', function () use ($app) {
                     //verify if person_id and role_id from formdata
                     $personId=array('person_id'=>$resultP);
                     $formDataU=array_merge($formDataU,$personId);
+
                     $roleId=array('role_id'=>2);
+                    $statusId=array('status_id'=>1);
+
                     $formDataU=array_merge($formDataU,$roleId);
+                    $formDataU=array_merge($formDataU,$statusId);
 
                     $resultU=$dbo->save('users',$formDataU);
 
