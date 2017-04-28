@@ -1,10 +1,10 @@
 <?php
 require_once(APP_ABSPATH.'vendor/redbean/rb.php');
 
-class Database extends RedBean_Facade{		
-	
+class Database extends RedBean_Facade{
+
 	private static $connection=NULL;
-	
+
 	function __construct(){
         R::freeze(true);
     }
@@ -13,7 +13,7 @@ class Database extends RedBean_Facade{
         global $databases;
 		$dbDefault=strtolower($databases['DB_DEFAULT']);
         switch ($dbDefault) {
-            case 'none':        
+            case 'none':
                 return NOT_USING_DATABASE;
                 break;
             case 'mysql':
@@ -46,22 +46,22 @@ class Database extends RedBean_Facade{
         }
 	}//init
 
-	public function save($table,$dataStore){
-		try{
-			$record = R::dispense($table);
+    public function save($table,$dataStore){
+        try{
+            $record = R::dispense($table);
             $record->import($dataStore);
             $id = R::store($record);
             // Check for successful insertion
             if ($id>0) {
                 return $id;
             } else {
-            	return NULL;
+                return NULL;
             }
-		}
-		catch( Exception $e ) {
-			R::rollback();
-		}
-	}//save
+        }
+        catch( Exception $e ) {
+            R::rollback();
+        }
+    }//save
 
     public function update($table, $dataStore) {
         $record = R::load($table,$dataStore['id']);
@@ -133,7 +133,7 @@ class Database extends RedBean_Facade{
             //$result = R::findAndExport($table);
             $result = R::getAll('select * from '.$table);
         }
-      
+
         if(!is_array($result)){
             return $result->export();
         }else{
@@ -181,7 +181,7 @@ class Database extends RedBean_Facade{
         if($conds){
             $sql.=' WHERE '.$conds;
         }
-        
+
         $result = self::execQuery($sql);
         return $result;
     }//select
