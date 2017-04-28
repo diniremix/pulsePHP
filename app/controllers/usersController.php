@@ -1,4 +1,4 @@
-<?php 
+<?php
 class usersController extends Users{
 
 	function __construct(){
@@ -6,19 +6,42 @@ class usersController extends Users{
 	}
 
 	function getAll($app,$table){
-        $dbo = new Database();
-        $result = $dbo->search($table);
-        if ($result != NULL) {
-            echoRespnse(0,DEFAULT_MESSAGE,$result);
-        }else{
-            echoRespnse(701,RESOURCE_NOT_EXIST);
-        }
+	        $dbo = new Database();
+	        $result = $dbo->search($table);
+	        if ($result != NULL) {
+	            echoRespnse(0,DEFAULT_MESSAGE,$result);
+	        }else{
+	            echoRespnse(701,RESOURCE_NOT_EXIST);
+	        }
 	}
-	
+
 	function getOne($app,$item_id){
 		$item=sanityCheck($item_id);
 		$id=(int)$item;
-		
+
+		$dbo = new Database();
+		if($id>0){
+			$result = $dbo->search('users',$id);
+			if ($result != NULL) {
+				echoRespnse(0,DEFAULT_MESSAGE,$result);
+			} else {
+				echoRespnse(701,RESOURCE_NOT_EXIST);
+			}
+		}else{
+			$cond="username='".$item."'";
+			$result=$dbo->select(array('users'),NULL,$cond);
+			if ($result != NULL) {
+				echoRespnse(0,DEFAULT_MESSAGE,$result);
+			} else {
+				echoRespnse(701,RESOURCE_NOT_EXIST);
+			}
+		}
+	}
+
+	function getToken($app,$item_id){
+		$item=sanityCheck($item_id);
+		$id=(int)$item;
+
 		$dbo = new Database();
 		if($id>0){
 			$result = $dbo->search('users',$id);
