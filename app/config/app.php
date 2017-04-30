@@ -44,7 +44,7 @@ $app->group('/', function () use ($app) {
 
 $app->group(API_NAME, function () use ($app) {
     $app->map('/', function() use ($app){
-        Rest::response(200, 'This is '.API_FULLNAME.', for more info visit: '.GITHUB_URL_APP);
+        Rest::response(200, 'This is '.API_FULLNAME.', codename: '.CODE_NAME);
     })->via('GET', 'POST');
 });
 
