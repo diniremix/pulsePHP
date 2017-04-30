@@ -2,11 +2,10 @@
 /*=========== App Configuration ==========*/
 date_default_timezone_set("America/Bogota");
 
-define('GITHUB_URL_APP','bar');
-define('CURRENT_NAME','foo');
+define('GITHUB_URL_APP','https://github.com/diniremix/pulsePHP');
 define('API_NAME','/api');
 define('CODE_NAME','dynamo');
-define('API_VERSION','v2.2a');
+define('API_VERSION','v2.2b');
 define('API_FULLNAME','pulsePHP version '.API_VERSION);
 
 define('ROUTES_PATH','routes/');
