@@ -10,6 +10,9 @@ POST    /apiVersion/user   Create a new user
 PUT     /apiVersion/user/[_id] Update an existing user
 DELETE  /apiVersion/user/[_id] Delete a user
 */
+use app\libraries\Rest;
+use app\libraries\Errors;
+$app = \Slim\Slim::getInstance();
 
 $app->group(API_NAME, function () use ($app) {
     $app->group('/users', function () use ($app) {

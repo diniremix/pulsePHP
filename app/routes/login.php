@@ -2,6 +2,10 @@
 /*=========== App Route functions ==========*/
 /*This file is part of the PulsePHP, Be careful with this file */
 
+use app\libraries\Rest;
+use app\libraries\Errors;
+$app = \Slim\Slim::getInstance();
+
 $app->group('/api', function () use ($app) {
     $app->group(API_NAME, function () use ($app) {
         $app->post('/login', function() use ($app) {
