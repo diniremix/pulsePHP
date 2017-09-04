@@ -5,8 +5,7 @@ class Modules {
     private static $_modules =array(
         'config' => array(
             'constants',
-            'app',
-            'databases',
+            'databases'
         ),
         'paths' => array(
             'CONFIG_PATH'=> 'config',
