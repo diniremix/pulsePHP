@@ -21,7 +21,7 @@ class Modules {
             //'basicAuth',
             'errorCodes',
             //'pulseAcl',
-            //'pulseLog',
+            'pulseLog',
             'rest',
             'sessions',
             'utils',
