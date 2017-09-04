@@ -28,7 +28,7 @@ $app->configureMode('production', function () use ($app) {
 // Only invoked if mode is "development"
 $app->configureMode('development', function () use ($app) {
     $app->config(array(
-        'log.enable' => false,
+        'log.enable' => true,
         'debug' => true,
         'templates.path' => './'.TEMPLATES_PATH
     ));
