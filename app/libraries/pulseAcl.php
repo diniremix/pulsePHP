@@ -1,5 +1,6 @@
 <?php
-
+namespace app\libraries;
+use app\libraries\Session;
 class Acl {
 
     public static function createAcl($newAcl){
@@ -24,4 +25,4 @@ class Acl {
             return false;
         }
     }
-}
+}//Acl

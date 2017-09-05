@@ -244,4 +244,4 @@ class Auth extends Database{
             $app->stop();
         }
     }
-}//class
+}//Auth

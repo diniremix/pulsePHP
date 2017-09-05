@@ -1,4 +1,6 @@
 <?php
+namespace app\libraries;
+use app\libraries\Session;
 class pulseLog {
 
     public static function getIp(){
@@ -39,4 +41,4 @@ class pulseLog {
         $dbo = new Database();
         $dbo->deleteAll('log');
     }
-}
+}//pulseLog

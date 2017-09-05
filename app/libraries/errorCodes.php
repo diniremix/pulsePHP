@@ -42,4 +42,4 @@ class Errors {
             return INVALID_CODE_ERROR;
         }
     }
-}
+}//Errors

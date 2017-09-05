@@ -1,7 +1,8 @@
 <?php
 /*=========== App Route functions ==========*/
 /*This file is part of the PulsePHP, Be careful with this file */
-
+namespace app\libraries;
+use app\libraries\pulseLog;
 class Session {
 
     public static function createSession($userSession){
@@ -41,4 +42,4 @@ class Session {
     public static function getSessionValue($name){
         return $_SESSION[$name];
     }
-}
+}//Session
