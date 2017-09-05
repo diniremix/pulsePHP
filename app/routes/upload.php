@@ -24,7 +24,7 @@ $app->group(API_NAME, function () use ($app) {
                         $unique_id = md5(uniqid(rand(), true));
 
                         $filetype = strrchr($imagename, '.');
-                        $new_upload = APP_ABSPATH.'/../uploads/' . $unique_id . $filetype;
+                        $new_upload = APP_PATH.'/../uploads/' . $unique_id . $filetype;
 
                         move_uploaded_file($_FILES['image']['tmp_name'], $new_upload);
 

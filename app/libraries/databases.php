@@ -1,5 +1,5 @@
 <?php
-require_once(APP_ABSPATH.'vendor/redbean/rb.php');
+require_once(APP_PATH.'vendor/redbean/rb.php');
 
 class Database extends RedBean_Facade{
 

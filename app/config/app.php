@@ -1,6 +1,6 @@
 <?php
 namespace app\config;
-require_once(APP_ABSPATH.DIRECTORY_SEPARATOR.'libraries'.DIRECTORY_SEPARATOR.'modules.php');
+require_once(APP_PATH.DIRECTORY_SEPARATOR.'libraries'.DIRECTORY_SEPARATOR.'modules.php');
 
 use app\libraries\Modules;
 use app\libraries\Rest;
