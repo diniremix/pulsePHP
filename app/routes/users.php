@@ -1,4 +1,4 @@
-<?php 
+<?php
 /*=========== Route functions for user class ==========*/
 /*This file is part of the PulsePHP, Be careful with this file */
 /*
@@ -64,5 +64,3 @@ $app->group(API_NAME, function () use ($app) {
         //CRUD END
     });
 });
-//});
-?>

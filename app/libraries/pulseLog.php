@@ -1,6 +1,6 @@
 <?php
 class pulseLog {
-    
+
     public static function getIp(){
         if (isset($_SERVER["HTTP_CLIENT_IP"])){
             return $_SERVER["HTTP_CLIENT_IP"];
@@ -34,10 +34,9 @@ class pulseLog {
             return NULL;
         }
     }
-    
+
     public static function clear(){
         $dbo = new Database();
         $dbo->deleteAll('log');
     }
 }
-?>

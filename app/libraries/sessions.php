@@ -15,9 +15,9 @@ class Session {
     }
 
     public static function verifySession(){
-        session_start(); 
-        if( !isset($_SESSION['username']) && !isset($_SESSION['role']) 
-            && !isset($_SESSION['api_key'])) { 
+        session_start();
+        if( !isset($_SESSION['username']) && !isset($_SESSION['role'])
+            && !isset($_SESSION['api_key'])) {
             return false;
         }else{
             return true;
@@ -42,5 +42,3 @@ class Session {
         return $_SESSION[$name];
     }
 }
-
-?>

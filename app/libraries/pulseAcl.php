@@ -1,7 +1,7 @@
 <?php
 
 class Acl {
-   
+
     public static function createAcl($newAcl){
         $role=Session::getSessionValue('role');
         $dbo = new Database();
@@ -25,5 +25,3 @@ class Acl {
         }
     }
 }
-
-?>

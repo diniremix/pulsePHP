@@ -68,4 +68,3 @@ $app->group(API_NAME, function () use ($app) {
         //CRUD END
     });
 });
-?>

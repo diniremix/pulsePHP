@@ -1,7 +1,7 @@
 <?php
 
 class Auth extends Database{
- 
+
     // blowfish
     private static $algo = '$2a';
     // cost parameter
@@ -11,15 +11,15 @@ class Auth extends Database{
     private static function unique_salt() {
         return substr(sha1(mt_rand()), 0, 22);
     }
- 
+
     // this will be used to generate a hash
     private static function hash($password) {
- 
+
         return crypt($password, self::$algo .
                 self::$cost .
                 '$' . self::unique_salt());
     }
- 
+
     // this will be used to compare a password against a hash
     private static function check_password($hash, $password) {
         $full_salt = substr($hash, 0, 29);
@@ -77,7 +77,7 @@ class Auth extends Database{
             $query.="username=";
         }
         $query.="'".$fields['username']."' LIMIT 1";
-        
+
         $password_hash=R::getCell($query);
 
         // Found user with the email o username
@@ -96,7 +96,7 @@ class Auth extends Database{
             return FALSE;
         }
     }
-    
+
     /**
      * [getApiKey Validating if user api key exists]
      * @param  [String]  $api_key [user api key]
@@ -110,7 +110,7 @@ class Auth extends Database{
             return NULL;
         }
     }
-    
+
     /**
      * [isValidApiKey Validating user api key
      * If the api key is there in db, it is a valid key]
@@ -125,7 +125,7 @@ class Auth extends Database{
             return false;
         }
     }
-    
+
     /**
      * [getUserId Fetching user id by api key]
      * @param  [String] $api_key [user api key]
@@ -194,7 +194,7 @@ class Auth extends Database{
         // Getting request headers
         $headers = apache_request_headers();
         $app = \Slim\Slim::getInstance();
-        
+
         // Verifying Authorization Header
         if (isset($headers[PUBLIC_KEY_TOKEN])) {
             // get the api key
@@ -237,5 +237,3 @@ class Auth extends Database{
         }
     }
 }//class
-
-?>

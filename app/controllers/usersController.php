@@ -77,4 +77,3 @@ class usersController extends Users{
 	    }
 	}
 }
-?>

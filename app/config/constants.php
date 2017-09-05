@@ -66,5 +66,3 @@ define('CONTROLLER_NOT_FOUND', 'Controller not found');
 define('MODEL_CONTROLLER_NOT_FOUND', 'Model or Controller not found');
 define('NOT_FOUND', 'Not found here');
 define('UNEXPECTED_ERROR', 'Unexpected Error');
-
-?>

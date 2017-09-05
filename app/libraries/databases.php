@@ -186,4 +186,3 @@ class Database extends RedBean_Facade{
         return $result;
     }//select
 }
-?>

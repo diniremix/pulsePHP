@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace app\config;
 require_once(APP_ABSPATH.DIRECTORY_SEPARATOR.'libraries'.DIRECTORY_SEPARATOR.'modules.php');
 
@@ -55,5 +55,3 @@ $app->notFound(function () use ($app) {
 
 // finally load routes for pulsePHP
 Modules::loadRoutes();
-
-?>

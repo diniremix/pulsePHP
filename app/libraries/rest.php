@@ -95,11 +95,10 @@ class Rest {
         }else{
             $response['data']=[];
         }
-        
+
         $app = \Slim\Slim::getInstance();
         $app->status($status_code);
         $app->contentType(APP_TYPE_CONTENT_DEFAULT);
         echo json_encode($response);
     }
 }//Utils
-?>

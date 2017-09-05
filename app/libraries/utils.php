@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * [isJSONData to evaluate for a valid JSON]
  * @param  [JSON]  $jsonData [JSON to validate]
@@ -46,7 +46,7 @@ function verifyRequiredParams($required_fields) {
             if (is_null(sanityCheck($request_params[$field]))){
                 $error = true;
                 $error_fields .= $field . ', ';
-            }            
+            }
         }
     }
 
@@ -132,7 +132,7 @@ function echoRespnse($errorCode,$message,$data=NULL) {
     }else{
         $response['data']=DEFAULT_DATA_CONTENT;
     }
-    
+
     $app = \Slim\Slim::getInstance();
     $app->status($status_code);
     $app->contentType(APP_TYPE_CONTENT_DEFAULT);
@@ -216,5 +216,3 @@ function templateExist($page){
         return false;
     }
 }
-
-?>
