@@ -4,13 +4,13 @@
 * POST    /apiVersion/upload   upload a new image
 */
 use app\libraries\Rest;
-use app\libraries\Errors;
+use app\libraries\pulseLog;
 $app = \Slim\Slim::getInstance();
 
 $app->group(API_NAME, function () use ($app) {
     $app->group('/upload', function () use ($app) {
         $app->get('/',  function()  use ($app){
-            echoRespnse(1006,DONT_HAVE_PERMISSION);
+            Rest::response(1006,DONT_HAVE_PERMISSION);
         });
 
         $app->post('/',  function()  use ($app){
@@ -36,34 +36,34 @@ $app->group(API_NAME, function () use ($app) {
                             'url'=>$uri,
                         );
 
-                        echoRespnse(0,DEFAULT_MESSAGE,$fields);
+                        Rest::response(0,DEFAULT_MESSAGE,$fields);
                     }else{
-                        echoRespnse(400, 'Oops!  Your file\'s size is to large!.');
+                        Rest::response(400, 'Oops!  Your file\'s size is to large!.');
                     }
                 }else{
                     $message = 'Ooops! Your upload triggered the following error: '.$_FILES['image']['error'];
-                    echoRespnse(400, $message);
+                    Rest::response(400, $message);
                 }
             }else{
-                echoRespnse(400, 'please using to upload a image');
+                Rest::response(400, 'please using to upload a image');
             }
         });
 
         //CRUD START
         $app->get('/:id', function($item_id) use ($app){
-            echoRespnse(1006,DONT_HAVE_PERMISSION);
+            Rest::response(1006,DONT_HAVE_PERMISSION);
         });
 
         $app->post('/:id', function($item_id) use ($app){
-            echoRespnse(1006,DONT_HAVE_PERMISSION);
+            Rest::response(1006,DONT_HAVE_PERMISSION);
         });
 
         $app->put('/:id', function($item_id)  use ($app){
-            echoRespnse(1006,DONT_HAVE_PERMISSION);
+            Rest::response(1006,DONT_HAVE_PERMISSION);
         });
 
         $app->delete('/:id', function($item_id)  use ($app){
-            echoRespnse(1006,DONT_HAVE_PERMISSION);
+            Rest::response(1006,DONT_HAVE_PERMISSION);
         });
         //CRUD END
     });

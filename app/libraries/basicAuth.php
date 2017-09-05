@@ -1,4 +1,8 @@
 <?php
+namespace app\libraries;
+use app\libraries\Rest;
+use app\libraries\Session;
+//use app\config\Database;
 
 class Auth extends Database{
 
@@ -207,17 +211,20 @@ class Auth extends Database{
                 if ($userID != NULL){
                     $user_id = $userID;
                 }else{
-                    echoRespnse(602, EXPIRED_API_KEY);
+                    //echoRespnse(602, EXPIRED_API_KEY);
+                    Rest::response(602, EXPIRED_API_KEY);
                     $app->stop();
                 }
             }else{
                 // api key is not present in users table
-                echoRespnse(603, INVALID_API_KEY,$headers[PUBLIC_KEY_TOKEN]);
+                //echoRespnse(603, INVALID_API_KEY,$headers[PUBLIC_KEY_TOKEN]);
+                Rest::response(603, INVALID_API_KEY,$headers[PUBLIC_KEY_TOKEN]);
                 $app->stop();
             }
         }else{
             // api key is missing in header
-            echoRespnse(604, MISSING_API_KEY);
+            //echoRespnse(604, MISSING_API_KEY);
+            Rest::response(604, MISSING_API_KEY);
             $app->stop();
         }
     }
@@ -232,7 +239,8 @@ class Auth extends Database{
         if(Session::verifySession()){
             return true;
         }else{
-            echoRespnse(203,NON_AUTHORITATIVE_INFORMATION);
+            //echoRespnse(203,NON_AUTHORITATIVE_INFORMATION);
+            Rest::response(203,NON_AUTHORITATIVE_INFORMATION);
             $app->stop();
         }
     }

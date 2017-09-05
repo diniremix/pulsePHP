@@ -11,7 +11,6 @@ PUT     /apiVersion/user/[_id] Update an existing user
 DELETE  /apiVersion/user/[_id] Delete a user
 */
 use app\libraries\Rest;
-use app\libraries\Errors;
 $app = \Slim\Slim::getInstance();
 
 $app->group(API_NAME, function () use ($app) {
@@ -24,7 +23,7 @@ $app->group(API_NAME, function () use ($app) {
                 "role_id"=>22
                 )
             );
-            echoRespnse(0,DEFAULT_MESSAGE,$users);
+            Rest::response(0,DEFAULT_MESSAGE,$users);
         });
 
         $app->post('/',  function()  use ($app){
@@ -42,24 +41,24 @@ $app->group(API_NAME, function () use ($app) {
                 "localization"=>array(4.6739405,-74.0800225),
                 )
             );
-            echoRespnse(0,DEFAULT_MESSAGE,$user);
+            Rest::response(0,DEFAULT_MESSAGE,$user);
         });
 
         //CRUD START
         $app->get('/:id', function($item_id) use ($app){
-            echoRespnse(1006,DONT_HAVE_PERMISSION);
+            Rest::response(1006,DONT_HAVE_PERMISSION);
         });
 
         $app->post('/:id', function($item_id) use ($app){
-            echoRespnse(1006,DONT_HAVE_PERMISSION);
+            Rest::response(1006,DONT_HAVE_PERMISSION);
         });
 
         $app->put('/:id', function($item_id)  use ($app){
-            echoRespnse(1006,DONT_HAVE_PERMISSION);
+            Rest::response(1006,DONT_HAVE_PERMISSION);
         });
 
         $app->delete('/:id', function($item_id)  use ($app){
-            echoRespnse(1006,DONT_HAVE_PERMISSION);
+            Rest::response(1006,DONT_HAVE_PERMISSION);
         });
         //CRUD END
     });
